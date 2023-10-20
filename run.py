@@ -3,7 +3,10 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
 import random
-
-# List of words to choose from
-word_list = ["INTERNET", "COMPUTER", "SOFTWARE", "DATABASE", "INFORMATION", "INFORMATICS", "COMPUTING", "ELECTRONICS", "NETWORK", "SYSTEM", "HARDWARE", "ENGINEERING", "KNOWLEDGE", "MEDIA"]
-
+word_list = ["INTERNET", "COMPUTER", "SOFTWARE", "DATABASE", "INFORMATION"]
+chose_word = random.choice(word_list)
+print(chose_word)
+display = []
+for letter in chose_word:
+	display += '_'
+print(display)
