@@ -19,8 +19,11 @@ def play_hangman():
     game_over = False
 
     print("Welcome to Hangman!")
+   # print("Your secret word: " + ' '.join(display))  
 
     while not game_over:
+        print(f"Your secret word: {' '.join(display)}") # Display initial underscores
+        print(f"Number of lives you have: {lives}")
         guessed_letter = input("Guess a letter: ").upper()
         
         if guessed_letter in guessed_letters:
@@ -35,7 +38,7 @@ def play_hangman():
             if letter == guessed_letter:
                 display[position] = chosen_word[position]
                 letter_guessed = True
-        print("Word to guess: " + ' '.join(display))  # Display updated word with spaces
+        print("Your secret word: " + ' '.join(display))  # Display updated word with spaces
 
         if not letter_guessed:
             lives -= 1
@@ -43,9 +46,9 @@ def play_hangman():
                 game_over = True
                 print("Sorry, you lost the game! The word was: " + chosen_word)
         
-        if '_' not in display:  # Check if there are no underscores left
+        if '_' not in display:  # Check if there are any underscores left
             game_over = True
-            print("WOW, you won the game! The word was: " + chosen_word)
+            print("Congratulations! You won! The word was: " + chosen_word)
             
         print(hangman_stages.stages[lives])
 
