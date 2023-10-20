@@ -5,15 +5,20 @@
 import random
 import hangman_stages
 
+def display_word(word, guessed_letters):
+    display = ""
+    for letter in word:
+        if letter.lower() in guessed_letters:
+            display += letter
+        else:
+            display += '_'
+    return display
+
 word_list = ["INTERNET", "COMPUTER", "SOFTWARE", "DATABASE", "INFORMATION"]
 choose_word = random.choice(word_list)
 print(choose_word)
 display = []
 
-# Display the number of blanks related to the word selected
-for letter in choose_word:
-    display += '_'
-print(display)
 
 # Initialize the number of lives
 lives = 6
