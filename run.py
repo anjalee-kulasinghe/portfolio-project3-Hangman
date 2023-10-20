@@ -7,12 +7,12 @@ import hangman_stages
 
 # Function to display the word with the guessed letters
 def display_word(word, guessed_letters):
-    display = " "
+    display = ""
     for letter in word:
         if letter.lower() in guessed_letters:
             display += letter
         elif letter.isalpha():
-            display += ' _ '
+            display += '_'
         else:
             display += letter
     return display
