@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 score = 0
 run = True
+show_welcome_message = True  # Variable to track whether to show the welcome message or not
 
 # Function to display welcome message
 def welcome_message():
@@ -11,7 +12,7 @@ def welcome_message():
 
 # Function to handle clicks of the letter buttons
 def check(letter, button_idx):
-    global count, win_count, run, score
+    global count, win_count, run, score, show_welcome_message
     buttons[button_idx - 1].destroy()  # Destroy the individual button
     if letter in selected_word:
         for i in range(0, len(selected_word)):
@@ -25,6 +26,7 @@ def check(letter, button_idx):
             answer = messagebox.askyesno('Game Over', 'You won!\nWant to play again?')
             if answer:
                 run = True
+                show_welcome_message = False  # Player continues, so no need to show the welcome message
                 root.destroy()
             else:
                 run = False
@@ -37,6 +39,7 @@ def check(letter, button_idx):
             answer = messagebox.askyesno('Game Over', 'You lost!\nWant to play again?')
             if answer:
                 run = True
+                show_welcome_message = False  # Player continues, so no need to show the welcome message
                 score = 0
                 root.destroy()
             else:
@@ -55,30 +58,28 @@ def close():
         run = False
         root.destroy()
 
-# Main loop
+# Mian loop
 while run:
     # Initializing a Tkinter window
     root = Tk()
     root.geometry('1200x725')
     root.title('HANGMAN')
-    root.config(bg='#E7FFFF')
+    root.config(bg = '#E7FFFF')
     count = 0
     win_count = 0
 
-    # Show welcome message
-    welcome_message()
-
     # Choosing the random word
-    index = random.randint(0, 58109)
-    file = open('words.txt', 'r')  # import the word text file
+    index = random.randint(0,58109)
+    file = open('words.txt','r') # import the word text file
     word_list = file.readlines()
     try:
         # Attempt to get the selected word from the list, stripping newline characters
-        selected_word = word_list[index].strip('\n')
+         selected_word = word_list[index].strip('\n')
     except IndexError:
         # Handle the case where the index is out of range
         print("Error: Index out of range. Check the number of lines in 'words.txt'.")
         exit()
+    selected_word = word_list[index].strip('\n')
 
     # Creating the dashes according to the selected word
     dashes_labels = []
@@ -89,12 +90,12 @@ while run:
         dash_label = Label(root, text="_", bg="#E7FFFF", font=("arial", 40))
         dash_label.place(x=x_position, y=450)
         dashes_labels.append(dash_label)
-
+    
     # Create a dictionary to store PhotoImage objects
     image_dict = {}
     for let in 'abcdefghijklmnopqrstuvwxyz':
         image_dict[let] = PhotoImage(file=f"{let}.png")
-
+    
     # Hangman images
     hangman_image = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']
     hangman_images = [PhotoImage(file=f"{hangman}.png") for hangman in hangman_image]
@@ -118,8 +119,12 @@ while run:
     exit_button.place(x=770, y=10)
 
     # Score label
-    score_label = Label(root, text='SCORE: ' + str(score), bg="#E7FFFF", font=("arial", 25))
+    score_label = Label(root, text='SCORE:' + str(score), bg="#E7FFFF", font=("arial", 25))
     score_label.place(x=10, y=10)
+
+     # Show welcome message only at the beginning
+    if show_welcome_message:
+        welcome_message()
 
     # Function to reveal the correct word
     def reveal_word():
