@@ -38,7 +38,9 @@ def check(letter, button_idx):
                 run = False
                 root.destroy()
 
-
+# Function to update the displayed hangman image
+def update_hangman():
+    hangman_label.config(image=hangman_images[count])
 
 # Mian loop
 while run:
