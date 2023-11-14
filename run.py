@@ -64,6 +64,13 @@ while run:
     index = random.randint(0,58109)
     file = open('words.txt','r') # import the word text file
     word_list = file.readlines()
+    try:
+        # Attempt to get the selected word from the list, stripping newline characters
+         selected_word = word_list[index].strip('\n')
+    except IndexError:
+        # Handle the case where the index is out of range
+        print("Error: Index out of range. Check the number of lines in 'words.txt'.")
+        exit()
     selected_word = word_list[index].strip('\n')
 
     # Creating the dashes according to the selected word
@@ -112,3 +119,10 @@ while run:
         messagebox.showinfo('Game Over', f'The correct word was: {selected_word.upper()}')
 
     root.mainloop()
+
+    try:
+         selected_word = word_list[index].strip('\n')
+    except IndexError:
+        print("Error: Index out of range. Check the number of lines in 'words.txt'.")
+        exit()
+    selected_word = word_list[index].strip('\n')
