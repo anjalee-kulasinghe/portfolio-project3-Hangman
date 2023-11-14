@@ -7,7 +7,7 @@ run = True
 
 # mian loop
 while run:
-    # declear the variables
+    # initializing a Tkinter window
     root = Tk()
     root.geometry('905x700') # screen size
     root.title('HANGMAN')
@@ -16,4 +16,8 @@ while run:
     win_count = 0
     secret_word_label = Label(root, text='', bg="#E7FFFF", font=("arial", 20))
 
-  
+    # choosing a random word
+    index = random.randint(0,853)
+    file = open('words.txt','r') # import the word text file
+    l = file.readlines()
+    selected_word = l[index].strip('\n')
