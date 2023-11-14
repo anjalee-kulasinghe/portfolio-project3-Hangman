@@ -5,6 +5,41 @@ from tkinter import messagebox
 score = 0
 run = True
 
+# Function to handle clicks of the letter buttons
+def check(letter, button_idx):
+    global count, win_count, run, score
+    buttons[button_idx - 1].destroy()  # Destroy the individual button
+    if letter in selected_word:
+        for i in range(0, len(selected_word)):
+            if selected_word[i] == letter and dashes_labels[i].cget("text") == "_":
+                win_count += 1
+                dashes_labels[i].config(text=letter.upper())  # Update the corresponding label
+        if win_count == len(selected_word):
+            score += 1
+            reveal_word()  # Call the function to reveal the correct word
+            answer = messagebox.askyesno('Game Over', 'You won!\nWant to play again?')
+            if answer:
+                run = True
+                root.destroy()
+            else:
+                run = False
+                root.destroy()
+    else:
+        count += 1
+        update_hangman()
+        if count == 6:
+            reveal_word()  # Call the function to reveal the correct word
+            answer = messagebox.askyesno('Game Over', 'You lost!\nWant to play again?')
+            if answer:
+                run = True
+                score = 0
+                root.destroy()
+            else:
+                run = False
+                root.destroy()
+
+
+
 # Mian loop
 while run:
     # Initializing a Tkinter window
