@@ -5,9 +5,9 @@ from tkinter import messagebox
 score = 0
 run = True
 
-# mian loop
+# Mian loop
 while run:
-    # initializing a Tkinter window
+    # Initializing a Tkinter window
     root = Tk()
     root.geometry('950x725')
     root.title('HANGMAN')
@@ -15,13 +15,13 @@ while run:
     count = 0
     win_count = 0
 
-    # choosing the random word
+    # Choosing the random word
     index = random.randint(0,58109)
     file = open('words.txt','r') # import the word text file
     word_list = file.readlines()
     selected_word = word_list[index].strip('\n')
 
-    # creating the dashes according to the selected word
+    # Creating the dashes according to the selected word
     dashes_labels = []
 
     x_position = 250
@@ -61,3 +61,9 @@ while run:
     # Score label
     score_label = Label(root, text='SCORE:' + str(score), bg="#E7FFFF", font=("arial", 25))
     score_label.place(x=10, y=10)
+
+    # Function to reveal the correct word
+    def reveal_word():
+        messagebox.showinfo('Game Over', f'The correct word was: {selected_word.upper()}')
+
+    root.mainloop()
