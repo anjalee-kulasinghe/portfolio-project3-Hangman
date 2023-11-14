@@ -1,61 +1,60 @@
 import random
 import hangman_stages
 
-# Function to display the word with the guessed letters
-def display_word(word, guessed_letters):
-    display = ""
-    for letter in word:
-        if letter.lower() in guessed_letters:
-            display += letter
-        elif letter.isalpha():
-            display += '_'
-        else:
-            display += letter
-    return display
-
-# Function to read words from an external file
 def read_words_from_file(filename):
     with open(filename, 'r') as file:
         words = file.read().splitlines()
     return words
 
-# Function to play the Hangman game
+def choose_word():
+    word_list = read_words_from_file("wordlist.txt")
+    return list(random.choice(word_list))  # Convert the chosen word to a list of characters
+
+def initialize_display(word):
+    return ['_' for _ in word]
+
 def play_hangman():
-    word_list = read_words_from_file("hangman_wordlist.txt") # read the word from the text file
-    choose_word = random.choice(word_list)
+    chosen_word = choose_word()
+    display = initialize_display(chosen_word)
+
+    lives = len(hangman_stages.stages) - 1
     guessed_letters = []
-    lives = len(hangman_stages.stages) - 1  # number of lives the player has
-    score = 0
+    game_over = False
 
     print("Welcome to Hangman!")
+    print("Word to guess:", ' '.join(display))
 
-    while lives > 0:
-        print(hangman_stages.stages[lives])
-        print("Word:", display_word(choose_word, guessed_letters))
-        print("Guessed Letters:", ', '.join(guessed_letters))
-        print("Lives:", lives)
+    while not game_over:
+        print(hangman_stages.stages[len(hangman_stages.stages) - lives])
+        print("Number of lives you have:", lives)
         guessed_letter = input("Guess a letter: ").upper()
-
+        
         if guessed_letter in guessed_letters:
             print("You have already guessed this letter.")
-        elif guessed_letter in choose_word:
-            print("Correct guess!")
-            guessed_letters.append(guessed_letter)
-            score += 10
-        else:
-            print("Incorrect guess!")
-            guessed_letters.append(guessed_letter)
+            continue
+        
+        guessed_letters.append(guessed_letter)
+        
+        letter_guessed = False
+        for position in range(len(chosen_word)):
+            letter = chosen_word[position]
+            if letter == guessed_letter:
+                display[position] = chosen_word[position]
+                letter_guessed = True
+        print("Word to guess:", ' '.join(display))
+
+        if '_' not in display:
+            game_over = True
+            print("WOW, you won the game! The word was:", ''.join(chosen_word))
+        elif not letter_guessed:
             lives -= 1
-
-        if '_' not in display_word(choose_word, guessed_letters):
-            print("Congratulations! You won!")
-            print("Your Score:", score)
-            break
-
-    if lives == 0:
-        print(hangman_stages.stages[0])
-        print("Sorry, you lost the game.")
-        print("The word was:", choose_word)
+            incorrect_guesses = len([letter for letter in guessed_letters if letter not in chosen_word])
+            if lives == 0:
+                game_over = True
+                print("Sorry, you lost the game! The word was:", ''.join(chosen_word))
+                print("Incorrect guesses:", incorrect_guesses)
+        
+        print(hangman_stages.stages[len(hangman_stages.stages) - lives])
 
 if __name__ == "__main__":
     play_hangman()
