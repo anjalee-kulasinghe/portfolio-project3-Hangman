@@ -42,6 +42,14 @@ def check(letter, button_idx):
 def update_hangman():
     hangman_label.config(image=hangman_images[count])
 
+# Function to handle the exit button
+def close():
+    global run
+    answer = messagebox.askyesno('ALERT', 'YOU WANT TO EXIT THE GAME?')
+    if answer:
+        run = False
+        root.destroy()
+
 # Mian loop
 while run:
     # Initializing a Tkinter window
