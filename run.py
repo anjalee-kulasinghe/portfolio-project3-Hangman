@@ -44,9 +44,9 @@ while run:
 
     # Letters placement
     buttons = []
-    button_height = 70  # Adjust this value based on your layout
+    button_height = 70  # Adjust this value based on the layout
     for i, letter in enumerate('abcdefghijklmnopqrstuvwxyz'):
-        row = i // 13  # Change the number 13 based on the number of buttons per row you want
+        row = i // 13  # Change the number 13 based on the number of buttons per row
         col = i % 13
         button = Button(root, bd=0, command=lambda l=letter, idx=i + 1: check(l, idx), bg="#E7FFFF",
                         activebackground="#E7FFFF", font=10, image=image_dict[letter])
@@ -57,3 +57,7 @@ while run:
     exit_image = PhotoImage(file='exit.png')
     exit_button = Button(root, bd=0, command=close, bg="#E7FFFF", activebackground="#E7FFFF", font=10, image=exit_image)
     exit_button.place(x=770, y=10)
+
+    # Score label
+    score_label = Label(root, text='SCORE:' + str(score), bg="#E7FFFF", font=("arial", 25))
+    score_label.place(x=10, y=10)
