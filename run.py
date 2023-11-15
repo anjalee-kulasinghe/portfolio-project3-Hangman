@@ -99,7 +99,12 @@ while run:
         
         # Hangman images
         hangman_image = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']
-        hangman_images = [PhotoImage(file=f"{hangman}.png") for hangman in hangman_image]
+        try:
+            hangman_images = [PhotoImage(file=f"{hangman}.png") for hangman in hangman_image]
+            exit_image = PhotoImage(file='exit.png')
+        except Exception as e:
+            print(f"An error occurred while loading resources: {e}")
+            exit()
         hangman_label = Label(root, bg="#E7FFFF", image=hangman_images[count])
         hangman_label.place(x=300, y=-50)
 
