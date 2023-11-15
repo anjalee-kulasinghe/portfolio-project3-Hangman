@@ -70,7 +70,7 @@ while run:
 
     # Choosing the random word
     index = random.randint(0,58109)
-    file = open('words.txt','r') # import the word text file
+    file = open('words.txt','r') # Import the word text file
     word_list = file.readlines()
     try:
         # Attempt to get the selected word from the list, stripping newline characters
@@ -83,7 +83,6 @@ while run:
 
     # Creating the dashes according to the selected word
     dashes_labels = []
-
     x_position = 250
     for i in range(len(selected_word)):
         x_position += 60
@@ -104,9 +103,9 @@ while run:
 
     # Letters placement
     buttons = []
-    button_height = 70  # Adjust this value based on the layout
+    button_height = 70  
     for i, letter in enumerate('abcdefghijklmnopqrstuvwxyz'):
-        row = i // 13  # Change the number 13 based on the number of buttons per row
+        row = i // 13
         col = i % 13
         button = Button(root, bd=0, command=lambda l=letter, idx=i + 1: check(l, idx), bg="#E7FFFF",
                         activebackground="#E7FFFF", font=10, image=image_dict[letter])
