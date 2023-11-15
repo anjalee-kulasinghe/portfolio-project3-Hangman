@@ -58,75 +58,81 @@ def close():
         run = False
         root.destroy()
 
-# Mian loop
+# Main loop
 while run:
-    # Initializing a Tkinter window
-    root = Tk()
-    root.geometry('1200x725')
-    root.title('HANGMAN')
-    root.config(bg = '#E7FFFF')
-    count = 0
-    win_count = 0
-
-    # Choosing the random word
-    index = random.randint(0,58109)
-    file = open('words.txt','r') # Import the word text file
-    word_list = file.readlines()
     try:
-        # Attempt to get the selected word from the list, stripping newline characters
-         selected_word = word_list[index].strip('\n')
-    except IndexError:
-        # Handle the case where the index is out of range
-        print("Error: Index out of range. Check the number of lines in 'words.txt'.")
+        # Initializing a Tkinter window
+        root = Tk()
+        root.geometry('1200x725')
+        root.title('HANGMAN')
+        root.config(bg = '#E7FFFF')
+        count = 0
+        win_count = 0
+
+        # Choosing the random word
+        index = random.randint(0,58109)
+        file = open('words.txt','r') # import the word text file
+        word_list = file.readlines()
+        try:
+            # Attempt to get the selected word from the list, stripping newline characters
+            selected_word = word_list[index].strip('\n')
+        except IndexError:
+            # Handle the case where the index is out of range
+            print("Error: Index out of range. Check the number of lines in 'words.txt'.")
+            exit()
+        selected_word = word_list[index].strip('\n')
+
+        # Creating the dashes according to the selected word
+        dashes_labels = []
+
+        x_position = 250
+        for i in range(len(selected_word)):
+            x_position += 60
+            dash_label = Label(root, text="_", bg="#E7FFFF", font=("arial", 40))
+            dash_label.place(x=x_position, y=450)
+            dashes_labels.append(dash_label)
+        
+        # Create a dictionary to store PhotoImage objects
+        image_dict = {}
+        for let in 'abcdefghijklmnopqrstuvwxyz':
+            image_dict[let] = PhotoImage(file=f"{let}.png")
+        
+        # Hangman images
+        hangman_image = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']
+        hangman_images = [PhotoImage(file=f"{hangman}.png") for hangman in hangman_image]
+        hangman_label = Label(root, bg="#E7FFFF", image=hangman_images[count])
+        hangman_label.place(x=300, y=-50)
+
+        # Letters placement
+        buttons = []
+        button_height = 70  # Adjust this value based on the layout
+        for i, letter in enumerate('abcdefghijklmnopqrstuvwxyz'):
+            row = i // 13  # Change the number 13 based on the number of buttons per row
+            col = i % 13
+            button = Button(root, bd=0, command=lambda l=letter, idx=i + 1: check(l, idx), bg="#E7FFFF",
+                            activebackground="#E7FFFF", font=10, image=image_dict[letter])
+            button.place(x=col * 70, y=row * button_height + 595)
+            buttons.append(button)
+
+        # Exit button
+        exit_image = PhotoImage(file='exit.png')
+        exit_button = Button(root, bd=0, command=close, bg="#E7FFFF", activebackground="#E7FFFF", font=10, image=exit_image)
+        exit_button.place(x=770, y=10)
+
+        # Score label
+        score_label = Label(root, text='SCORE:' + str(score), bg="#E7FFFF", font=("arial", 25))
+        score_label.place(x=10, y=10)
+
+        # Show welcome message only at the beginning
+        if show_welcome_message:
+            welcome_message()
+
+        # Function to reveal the correct word
+        def reveal_word():
+            messagebox.showinfo('Game Over', f'The correct word was: {selected_word.upper()}')
+
+        root.mainloop()
+
+    except Exception as e:
+        print(f"An error occurred while creating the Tkinter window: {e}")
         exit()
-    selected_word = word_list[index].strip('\n')
-
-    # Creating the dashes according to the selected word
-    dashes_labels = []
-    x_position = 250
-    for i in range(len(selected_word)):
-        x_position += 60
-        dash_label = Label(root, text="_", bg="#E7FFFF", font=("arial", 40))
-        dash_label.place(x=x_position, y=450)
-        dashes_labels.append(dash_label)
-    
-    # Create a dictionary to store PhotoImage objects
-    image_dict = {}
-    for let in 'abcdefghijklmnopqrstuvwxyz':
-        image_dict[let] = PhotoImage(file=f"{let}.png")
-    
-    # Hangman images
-    hangman_image = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']
-    hangman_images = [PhotoImage(file=f"{hangman}.png") for hangman in hangman_image]
-    hangman_label = Label(root, bg="#E7FFFF", image=hangman_images[count])
-    hangman_label.place(x=300, y=-50)
-
-    # Letters placement
-    buttons = []
-    button_height = 70  
-    for i, letter in enumerate('abcdefghijklmnopqrstuvwxyz'):
-        row = i // 13
-        col = i % 13
-        button = Button(root, bd=0, command=lambda l=letter, idx=i + 1: check(l, idx), bg="#E7FFFF",
-                        activebackground="#E7FFFF", font=10, image=image_dict[letter])
-        button.place(x=col * 70, y=row * button_height + 595)
-        buttons.append(button)
-
-    # Exit button
-    exit_image = PhotoImage(file='exit.png')
-    exit_button = Button(root, bd=0, command=close, bg="#E7FFFF", activebackground="#E7FFFF", font=10, image=exit_image)
-    exit_button.place(x=770, y=10)
-
-    # Score label
-    score_label = Label(root, text='SCORE:' + str(score), bg="#E7FFFF", font=("arial", 25))
-    score_label.place(x=10, y=10)
-
-     # Show welcome message only at the beginning
-    if show_welcome_message:
-        welcome_message()
-
-    # Function to reveal the correct word
-    def reveal_word():
-        messagebox.showinfo('Game Over', f'The correct word was: {selected_word.upper()}')
-
-    root.mainloop()
