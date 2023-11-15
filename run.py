@@ -1,6 +1,7 @@
 import random
 from tkinter import *
 from tkinter import messagebox
+import os
 
 score = 0
 run = True
@@ -72,7 +73,7 @@ while run:
         # Choosing the random word
         index = random.randint(0,58109)
         try:
-            file = open('words.txt', 'r')# import the word text file
+            file = open('words.txt', 'r')  # import the word text file
             word_list = file.readlines()
             selected_word = word_list[index].strip('\n')
         except FileNotFoundError:
@@ -91,20 +92,21 @@ while run:
             dash_label = Label(root, text="_", bg="#E7FFFF", font=("arial", 40))
             dash_label.place(x=x_position, y=450)
             dashes_labels.append(dash_label)
-        
+
         # Create a dictionary to store PhotoImage objects
         image_dict = {}
         for let in 'abcdefghijklmnopqrstuvwxyz':
-            image_dict[let] = PhotoImage(file=f"{let}.png")
-        
+            image_path = os.path.join('assets', 'images', f"{let}.png")
+            image_dict[let] = PhotoImage(file=image_path)
+
         # Hangman images
         hangman_image = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']
         try:
-            hangman_images = [PhotoImage(file=f"{hangman}.png") for hangman in hangman_image]
-            exit_image = PhotoImage(file='exit.png')
+            hangman_images = [PhotoImage(file=os.path.join('assets', 'images', f"{hangman}.png")) for hangman in hangman_image]
         except Exception as e:
             print(f"An error occurred while loading resources: {e}")
             exit()
+
         hangman_label = Label(root, bg="#E7FFFF", image=hangman_images[count])
         hangman_label.place(x=300, y=-50)
 
@@ -120,7 +122,7 @@ while run:
             buttons.append(button)
 
         # Exit button
-        exit_image = PhotoImage(file='exit.png')
+        exit_image = PhotoImage(file=os.path.join('assets', 'images', 'exit.png'))
         exit_button = Button(root, bd=0, command=close, bg="#E7FFFF", activebackground="#E7FFFF", font=10, image=exit_image)
         exit_button.place(x=770, y=10)
 
