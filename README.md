@@ -244,9 +244,11 @@ OS is used to handle file paths when loading image resources.
 ### Content
 * The word list was taken from [BrandonKirklen](https://github.com/Tom25/Hangman/blob/master/wordlist.txt).
 * The code idea to do the project using tkinter GUI is taken from [CodeSploit](https://www.youtube.com/watch?v=99zOhml1-6s).
+* The help for some error handling was taken from [BrandonKirklen](https://github.com/Tom25/Hangman/blob/master/hangman.py).
 
 ### Media
-The Rag dall image used as the hangman was taken from the artist [Fernanda Mello](https://fehcm.artstation.com/projects/L3EVOR).
+* The Rag dall image used as the hangman was taken from the artist [Fernanda Mello](https://fehcm.artstation.com/projects/L3EVOR).
+* All images used in the project was created using [Photopea](https://www.photopea.com/) online editor.
 
 ### Acknowledgements
 * Inspirational support from [Jenny's Lectures CS IT](https://www.youtube.com/watch?v=tMJbCWHAWQ4)
