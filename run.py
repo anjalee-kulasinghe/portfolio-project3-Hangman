@@ -71,16 +71,16 @@ while run:
 
         # Choosing the random word
         index = random.randint(0,58109)
-        file = open('words.txt','r') # import the word text file
-        word_list = file.readlines()
         try:
-            # Attempt to get the selected word from the list, stripping newline characters
+            file = open('words.txt', 'r')# import the word text file
+            word_list = file.readlines()
             selected_word = word_list[index].strip('\n')
-        except IndexError:
-            # Handle the case where the index is out of range
-            print("Error: Index out of range. Check the number of lines in 'words.txt'.")
+        except FileNotFoundError:
+            print("Error: 'words.txt' not found. Make sure the file exists.")
             exit()
-        selected_word = word_list[index].strip('\n')
+        except Exception as e:
+            print(f"An error occurred while reading the file: {e}")
+            exit()
 
         # Creating the dashes according to the selected word
         dashes_labels = []
