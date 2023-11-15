@@ -13,30 +13,32 @@ The game continues until the guessing player successfully guesses the word or th
 
 
 # Table of Contents
-- [Hangman](#hangman)
-  - [Code Institute - Second Milestone Project: JavaScript Essentials Portfolio Project.](#code-institute---third-milestone-project-python-essentials-portfolio-project)
-- [Table of Contents](#table-of-contents)
-  - [Demo](#demo)
-    - [A live demo to the website can be found here](#a-live-demo-to-the-website-can-be-found-here)
-  - [UX](#ux)
-  - [User stories](#user-stories)
-    - [Strategy](#strategy)
-    - [Scope](#scope)
-    - [Structure](#structure)
-    - [Skeleton](#skeleton)
-    - [Surface](#surface)
-  - [Technologies](#technologies)
-  - [Features](#features)
-    - [Existing Features](#existing-features)
-    - [Features Left to Implement](#features-left-to-implement)
-  - [Testing](#testing)
-    - [Validator Testing](#validator-testing)
-    - [Bugs](#bugs)
-  - [Deployment](#deployment)
-  - [Credits](#credits)
-    - [Content](#content)
-    - [Media](#media)
-    - [Acknowledgements](#acknowledgements)
+- [Demo](#demo)
+  - [A live demo to the website can be found here](#a-live-demo-to-the-website-can-be-found-here)
+- [How to Play:](#how-to-play)
+- [Planning Phase](#planning-phase)
+  - [User stories:](#user-stories)
+  - [Site Aims:](#site-aims)
+  - [How Will This Be Achieved:](#how-will-this-be-achieved)
+  - [Game Flow Chart:](#game-flow-chart)
+- [Features](#features)
+  - [Welcome Screen:](#welcome-screen)
+  - [Once Play Game is Started:](#once-play-game-is-started)
+  - [Error Handling:](#error-handling)
+  - [Future-Enhancements:](#future-enhancements) 
+- [Data Model](#testing)
+- [Testing](#testing)
+  - [Validator Testing](#validator-testing)
+  - [Bugs](#bugs)
+- [Libraries](#libraries)
+  - [random:](#random)
+  - [tkinter:](#tkinter)
+  - [os:](#os)
+- [Deployment](#deployment)
+- [Credits](#credits)
+  - [Content](#content)
+  - [Media](#media)
+  - [Acknowledgements](#acknowledgements)
 
 ## Demo
 
@@ -55,7 +57,7 @@ The game continues until the guessing player successfully guesses the word or th
 
 
 ## Planning Phase
-### User stories
+### User stories:
 - As a player, I want to start a new game so that I can begin guessing a new word.
 - As a player, I want to see the number of letters in the word represented by dashes, so that I know how many letters I need to guess.
 - As a player, I want to be able to guess a letter and see if it is in the word, so that I can progress in solving the puzzle.
@@ -153,7 +155,7 @@ During the development process, error handling is done to make sure the player w
 4. Tkinter Window Creation Error:
   - If there is an error during the creation of the Tkinter window, an exception is caught, and an error message is printed before exiting.
 
-### Future-Enhancements
+### Future-Enhancements:
 Below are the things that would take my current MVP to the next level:
 1. Multiple Difficulty Levels:
     - Implement different difficulty levels with varying word complexities. Allow users to choose their preferred difficulty before starting the game.
@@ -222,6 +224,7 @@ The breakdown of the data model is as follows:
  The logic flow involves the continuous execution of the main loop, where the Tkinter window is created, user input is handled, and the game state is updated based on correct or incorrect guesses. The loop continues until the player decides to exit the game.
 
 ## Testing Phase
+
 ## Libraries
 ### random:
 This library is used for generating random numbers. In the code, it is used to select a random index for choosing a word from the list.
@@ -241,6 +244,7 @@ OS is used to handle file paths when loading image resources.
 ### Content
 * The word list was taken from [BrandonKirklen](https://github.com/Tom25/Hangman/blob/master/wordlist.txt).
 * The code idea to do the project using tkinter GUI is taken from [CodeSploit](https://www.youtube.com/watch?v=99zOhml1-6s).
+
 ### Media
 The Rag dall image used as the hangman was taken from the artist [Fernanda Mello](https://fehcm.artstation.com/projects/L3EVOR).
 
