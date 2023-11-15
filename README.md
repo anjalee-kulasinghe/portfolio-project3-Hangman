@@ -144,8 +144,15 @@ From the welcome screen, the user will get the guidance 'How to Play the Game'.
 
 ### Error Handling:
 During the development process, error handling is done to make sure the player will have a smoother user experience and to make the code more robust.
-* 
-
+1. File Not Found:
+  - If the 'words.txt' file is not found, the code prints an error message and exits the program.
+2. File Reading Error:
+  - If there is an error while reading the file, an exception is caught, and an error message is printed before exiting.
+3. Resource Loading Error:
+  - If there is an error while loading image resources (hangman images), an exception is caught, and an error message is printed before exiting.
+4. Tkinter Window Creation Error:
+  - If there is an error during the creation of the Tkinter window, an exception is caught, and an error message is printed before exiting.
+  
 ### Future-Enhancements
 Below are the things that would take my current MVP to the next level:
 1. Multiple Difficulty Levels:
