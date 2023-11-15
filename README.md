@@ -229,9 +229,24 @@ This library is used for generating random numbers. In the code, it is used to s
 ### tkinter:
 Tkinter is the standard GUI (Graphical User Interface) toolkit for Python. It is used to create the main game window, labels, buttons, and message boxes.
 
-## Deployment
+### os:
+OS is used to handle file paths when loading image resources.
 
+## Deployment
 ### Playing on a Local machine:
 ### Final Deployment to Heroku:
-## Honorable Mentions
+
+
 ## Credits
+### Content
+* The word list was taken from [BrandonKirklen](https://github.com/Tom25/Hangman/blob/master/wordlist.txt).
+* The code idea to do the project using tkinter GUI is taken from [CodeSploit](https://www.youtube.com/watch?v=99zOhml1-6s).
+### Media
+The Rag dall image used as the hangman was taken from the artist [Fernanda Mello](https://fehcm.artstation.com/projects/L3EVOR).
+
+### Acknowledgements
+* Inspirational support from [Jenny's Lectures CS IT](https://www.youtube.com/watch?v=tMJbCWHAWQ4)
+* Took the support from [Open Source Options](https://www.youtube.com/watch?v=D7zfEZGbu5A) to learn Run Python Scripts from the Local Terminal.
+
+* The the Code Institute Tutor Assistance for helping me with the correct guidance.
+* Last but not least, my mentor, Medale Oluwafemi, for his invaluable guidance.
