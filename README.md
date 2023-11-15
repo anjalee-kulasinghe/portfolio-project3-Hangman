@@ -152,7 +152,7 @@ During the development process, error handling is done to make sure the player w
   - If there is an error while loading image resources (hangman images), an exception is caught, and an error message is printed before exiting.
 4. Tkinter Window Creation Error:
   - If there is an error during the creation of the Tkinter window, an exception is caught, and an error message is printed before exiting.
-  
+
 ### Future-Enhancements
 Below are the things that would take my current MVP to the next level:
 1. Multiple Difficulty Levels:
@@ -177,15 +177,61 @@ Below are the things that would take my current MVP to the next level:
    - Ensure the game is fully responsive to different screen sizes, making it accessible and enjoyable on various devices.
 
 ## Data Model
-### Overview of Classes:
+The data model revolves around maintaining the state of the game, handling user input, updating the graphical interface, and managing resources. The code combines Tkinter GUI elements, game logic, and file operations to create a simple Hangman game.
+
+### Overview
+The breakdown of the data model is as follows:
+* Game State Variables:
+  * **score:** An integer representing the player's score.
+  * **run:** A boolean indicating whether the game is currently running.
+  * **show_welcome_message:** A boolean variable to track whether to show the welcome message.
+
+* Tkinter Window and GUI Elements:
+  * **root:** The Tkinter main window that serves as the container for all GUI elements.
+  * **buttons:** A list to store Tkinter Button widgets representing letter buttons.
+  * **dashes_labels:** A list to store Tkinter Label widgets representing the dashes for the letters in the word.
+  * **hangman_label:** A Tkinter Label widget displaying the hangman image.
+  * **score_label:** A Tkinter Label widget displaying the player's score.
+
+* Hangman-related Variables:
+  * **count:** An integer representing the count of incorrect guesses (used to determine which hangman image to display).
+  * **win_count:** An integer representing the count of correct guesses.
+  * **selected_word:** A string representing the randomly chosen word for the current game.
+
+* Game Functions:
+  * **welcome_message():** Displays a welcome message using a Tkinter messagebox.
+  * **check(letter, button_idx):** Handles player clicks on letter buttons, updates game state based on guesses, and checks for win/loss conditions.
+  * **update_hangman():** Updates the displayed hangman image based on the count of incorrect guesses.
+  * **close():** Handles the exit button, prompting the user with a confirmation message before exiting.
+
+* Main Loop and Game Initialization:
+  * A while loop (**while run:**) that controls the flow of the game.
+  * The loop initializes a Tkinter window (root) and sets up the game elements.
+  * The loop continues as long as the **run** variable is **True**.
+
+* Resource Loading:
+  * Images for letters, hangman stages, and an exit button are loaded using the Tkinter **PhotoImage** class and stored in relevant dictionaries or lists (**image_dict**, **hangman_images**).
+
+* File Handling:
+  * The code attempts to open and read from a file named 'words.txt' to obtain a list of words for the game. It handles potential errors like file not found or reading errors.
+
+*Error Handling:
+  * There are some basic error-handling mechanisms, such as handling file-related errors and general exceptions during Tkinter window creation.
+
 ### Logic Flow:
-* Setup Phase:
-* Firing Round:
+ The logic flow involves the continuous execution of the main loop, where the Tkinter window is created, user input is handled, and the game state is updated based on correct or incorrect guesses. The loop continues until the player decides to exit the game.
+
 ## Testing Phase
 ## Libraries
 ### random:
+This library is used for generating random numbers. In the code, it is used to select a random index for choosing a word from the list.
+
+### tkinter:
+Tkinter is the standard GUI (Graphical User Interface) toolkit for Python. It is used to create the main game window, labels, buttons, and message boxes.
+
 ## Deployment
-### Playing on a Local machine or via Gitpod Terminal:
+
+### Playing on a Local machine:
 ### Final Deployment to Heroku:
 ## Honorable Mentions
 ## Credits
