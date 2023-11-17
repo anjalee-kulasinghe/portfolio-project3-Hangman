@@ -1,6 +1,7 @@
 import random
 import hangman_stages
 
+
 # Define the scoring constants
 CORRECT_GUESS_SCORE = 10
 INCORRECT_GUESS_PENALTY = 5
@@ -51,7 +52,7 @@ __        _______ _     ____ ___  __  __ _____
    |_| \___/  |_| |_/_/   \_\_| \_|\____|_|  |_/_/   \_\_| \_|
 """)
     print("How to play:")
-    print("1. The secret word,number of letters of the word by dash marks.")
+    print("1. The secret word, the number of letters of the word by dash marks.")
     print("2. Type a letter to guess the word.")
     print(
         "3. Correct letter guessed, reveal all occurrences in the word"
@@ -61,7 +62,6 @@ __        _______ _     ____ ___  __  __ _____
     print("6. Try to guess the word and increase your score!")
     print("7. Maximum score = 60. Each wrong guess -5 marks")
     print("8. Enjoy the game!")
-
 
 def calculate_score(correct_guesses, incorrect_guesses):
     '''
@@ -73,12 +73,12 @@ def calculate_score(correct_guesses, incorrect_guesses):
         incorrect_guesses * INCORRECT_GUESS_PENALTY
     )
 
-
 def play_hangman():
     # Display the welcome message only if it hasn't been displayed before
     welcome_displayed = False
 
     while True:
+	# Check if the welcome message has not been displayed
         if not welcome_displayed:
             print_welcome()
             welcome_displayed = True
@@ -92,16 +92,18 @@ def play_hangman():
             print("Goodbye!")
             break
 
-        while True:
-            print("\nReady to play [Y/N]?")
-            ready_to_play = input().upper()
+        # Ask if the player is ready to play only after displaying the welcome message
+        print("\nReady to play [Y/N]?")
+        ready_to_play = input().upper()
 
-            if ready_to_play != 'Y':
-                print("Goodbye!")
-                break
+        if ready_to_play != 'Y':
+            print("Goodbye!")
+            break
 
-            
-            chosen_word = choose_word() # Get a word to guess from the file
+        play_again = True
+
+        while play_again:
+            chosen_word = choose_word()  # Get a word to guess from the file
             display = initialize_display(chosen_word)  # Underscores for each letter in the word
             lives = 6  # Set the initial number of lives
             guessed_letters = []  # List to store guessed letters
@@ -173,7 +175,14 @@ def play_hangman():
             print("\nWould you like to play again? (Y/N): ")
             play_again_input = input().upper()
 
-        # If the player chooses not to play again, display a goodbye message
+            # If the player chooses not to play again, exit the inner loop
+            if play_again_input != 'Y':
+                print("Goodbye!")
+                play_again = False
+            else:
+                play_again = True
+
+        # Exit the game if the player chooses not to play again
         if play_again_input != 'Y':
             print("Goodbye!")
             break
