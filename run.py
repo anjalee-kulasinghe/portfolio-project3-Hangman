@@ -1,12 +1,13 @@
 import random
 import hangman_stages
 
+
 def choose_word():
-'''
-Read a list of words from a text file and 
-randomly select one of the words.
-Converted to uppercase. 
-'''
+    '''
+    Read a list of words from a text file and
+    randomly select one of the words.
+    Converted to uppercase.
+    '''
     try:
         with open('words.txt', 'r') as file:
             word_list = file.readlines()
@@ -15,29 +16,31 @@ Converted to uppercase.
         print("Error: 'words.txt' not found. Make sure the file exists.")
         exit()
 
+
 def initialize_display(word):
-'''
-Initializes a display for a word by creating a list of underscores. 
-'''
+    '''
+    Initializes a display for a word by creating a list of underscores.
+    '''
     return ['_' for _ in word]
 
+
 def is_valid_input(guessed_letter):
-'''
-Checks if the inputted guessed letter is valid.
-'''
+    '''
+    Checks if the inputted guessed letter is valid.
+    '''
     return guessed_letter.isalpha() and len(guessed_letter) == 1
 
+
 def print_welcome():
-'''
-Welcome message and How to play.
-'''
+    '''
+    Welcome message and How to play.
+    '''
     print(r"""
- __        _______ _     ____ ___  __  __ _____ 
+__        _______ _     ____ ___  __  __ _____ 
  \ \      / / ____| |   / ___/ _ \|  \/  | ____|
   \ \ /\ / /|  _| | |  | |  | | | | |\/| |  _|  
    \ V  V / | |___| |__| |__| |_| | |  | | |___ 
     \_/\_/  |_____|_____\____\___/|_|  |_|_____|
-
   _____ ___    _   _    _    _   _  ____ __  __    _    _   _ 
  |_   _/ _ \  | | | |  / \  | \ | |/ ___|  \/  |  / \  | \ | |
    | || | | | | |_| | / _ \ |  \| | |  _| |\/| | / _ \ |  \| |
@@ -45,13 +48,16 @@ Welcome message and How to play.
    |_| \___/  |_| |_/_/   \_\_| \_|\____|_|  |_/_/   \_\_| \_|
 """)
     print("How to play:")
-    print("1. The system will provide a random word, reflecting the number of letters of the word by dash marks.")
+    print("1. The secret word,number of letters of the word by dash marks.")
     print("2. Type a letter to guess the word.")
-    print("3. If the guessed letter is correct, the system will reveal all occurrences of that letter in the word.")
+    print(
+        "3. Correct letter guessed, reveal all occurrences in the word"
+    )
     print("4. Each wrong guess will add a part for the hangman.")
     print("5. Six incorrect guesses will end the game.")
     print("6. Try to guess the word and increase your score!")
     print("7. Enjoy the game!")
+
 
 def play_hangman():
     # Display the welcome message
@@ -69,7 +75,7 @@ def play_hangman():
     # Get a word to guess from the file
     chosen_word = choose_word()
 
-    # Initialize the display with underscores for each letter in the chosen word
+    # Display an underscores for each letter in the chosen word
     display = initialize_display(chosen_word)
 
     # Set the initial number of lives
@@ -146,7 +152,7 @@ def play_hangman():
     print("\nWould you like to play again? (Y/N): ")
     play_again_input = input().upper()
 
-    # If the player chooses to play again, recursively call the play_hangman function
+    # If the player chooses to play again, call the play_hangman function
     if play_again_input == 'Y':
         play_hangman()
     else:
