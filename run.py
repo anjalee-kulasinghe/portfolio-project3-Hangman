@@ -52,7 +52,7 @@ __        _______ _     ____ ___  __  __ _____
    |_| \___/  |_| |_/_/   \_\_| \_|\____|_|  |_/_/   \_\_| \_|
 """)
     print("How to play:")
-    print("1. The secret word, the number of letters of the word by dash marks.")
+    print("1. The secret word, underscore revels the number of letters.")
     print("2. Type a letter to guess the word.")
     print(
         "3. Correct letter guessed, reveal all occurrences in the word"
@@ -62,6 +62,7 @@ __        _______ _     ____ ___  __  __ _____
     print("6. Try to guess the word and increase your score!")
     print("7. Maximum score = 60. Each wrong guess -5 marks")
     print("8. Enjoy the game!")
+
 
 def calculate_score(correct_guesses, incorrect_guesses):
     '''
@@ -73,12 +74,12 @@ def calculate_score(correct_guesses, incorrect_guesses):
         incorrect_guesses * INCORRECT_GUESS_PENALTY
     )
 
-def play_hangman():
+
+def execute_hangman_game():
     # Display the welcome message only if it hasn't been displayed before
     welcome_displayed = False
 
     while True:
-	# Check if the welcome message has not been displayed
         if not welcome_displayed:
             print_welcome()
             welcome_displayed = True
@@ -92,100 +93,144 @@ def play_hangman():
             print("Goodbye!")
             break
 
-        # Ask if the player is ready to play only after displaying the welcome message
-        print("\nReady to play [Y/N]?")
-        ready_to_play = input().upper()
-
-        if ready_to_play != 'Y':
+        # Check if the player is ready to play the game
+        ready_to_play = get_ready_status()
+        if not ready_to_play:
             print("Goodbye!")
             break
 
-        play_again = True
+        # Play the game
+        play_game()
 
-        while play_again:
-            chosen_word = choose_word()  # Get a word to guess from the file
-            display = initialize_display(chosen_word)  # Underscores for each letter in the word
-            lives = 6  # Set the initial number of lives
-            guessed_letters = []  # List to store guessed letters
-            game_over = False  # Flag to track if the game is over
-            correct_guesses = 0
-            incorrect_guesses = 0
+        # Ask the player if they want to play again
+        print("Would you like to play again? (Y/N):")
+        play_again_input = input().upper()
 
-            # Display the initial state of the word to guess
-            print("Word to guess: " + ' '.join(display))
-
-            # Main loop for each turn of the game
-            while not game_over:
-                # Display the number of lives the player has
-                print("\nNumber of lives you have:", lives)
-
-                # Get the guessed letter from the player
-                guessed_letter = input("Guess a letter: ").upper()
-
-                # Validate the guessed letter input
-                if not is_valid_input(guessed_letter):
-                    print("Please enter a valid single alphabet letter A-Z.")
-                    continue
-
-                # Check if the letter has already been guessed
-                if guessed_letter in guessed_letters:
-                    print("You have already guessed this letter.")
-                    continue
-
-                # Add the guessed letter to the list of guessed letters
-                guessed_letters.append(guessed_letter)
-
-                # Flag to check if the guessed letter is in the word
-                letter_guessed = False
-
-                # Check each position in the chosen word
-                for position in range(len(chosen_word)):
-                    letter = chosen_word[position]
-                    if letter == guessed_letter:
-                        # Update the display if the guessed letter is in the word
-                        display[position] = chosen_word[position]
-                        letter_guessed = True
-
-                # Provide feedback to the player based on the guessed letter
-                if letter_guessed:
-                    print("You made a correct guess!")
-                    correct_guesses += 1
-                else:
-                    # If the guessed letter is not in the word, decrement the lives
-                    lives -= 1
-                    incorrect_guesses += 1
-                    print("Sorry, wrong guess. Try another letter.")
-                    print("Hangman stage:")
-                    print(hangman_stages.stages[lives])  # Print the hangman stage
-
-                # Display the updated word with spaces
-                print("Word to guess: " + ' '.join(display))
-
-                # Check if the word has been completely guessed
-                if '_' not in display:
-                    game_over = True
-                    score = calculate_score(correct_guesses, incorrect_guesses)
-                    print(f"WOW, you won the game! The word was: {chosen_word}")
-                    print(f"Your score: {score}")
-                elif lives == 0:
-                    game_over = True
-                    print("Sorry, you lost the game! The word was: " + chosen_word)
-
-            # Ask the player if they want to play again
-            print("\nWould you like to play again? (Y/N): ")
-            play_again_input = input().upper()
-
-            # If the player chooses not to play again, exit the inner loop
-            if play_again_input != 'Y':
-                print("Goodbye!")
-                play_again = False
-            else:
-                play_again = True
-
-        # Exit the game if the player chooses not to play again
+        # If the player does not want to play again, exit the game
         if play_again_input != 'Y':
             print("Goodbye!")
             break
+
+        # Set welcome_displayed to True to avoid repeating the welcome message
+        welcome_displayed = True
+
+
+def get_ready_status():
+    '''
+    Check if the player is ready to play the game
+    '''
+    user_input = input("\nReady to play [Y/N]? ").upper()
+    return user_input == 'Y'
+
+
+def play_game():
+    """
+    Plays the Hangman game, allowing the player to guess words.
+    The game includes displaying a welcome message,
+    prompting the player to start,
+    checking if the player is ready,
+    playing the actual game,
+    and asking if the player wants to play again.
+    The game continues until the player decides to exit.
+    """
+    chosen_word = choose_word()  # Select a random word
+    display = initialize_display(chosen_word)  # Underscores for each letter
+
+    # Set the initial variables
+    lives = 6
+    guessed_letters = []
+    correct_guesses = 0
+    incorrect_guesses = 0
+    game_over = False
+
+    print("Word to guess: " + ' '.join(display))
+    # Continue the game until it's over
+    while not game_over:
+        # Play a turn and get the updated state
+        lives, guessed_letters, display, letter_guessed = play_turn(
+            chosen_word, lives, guessed_letters, display
+        )
+
+        # Update the counters based on the result of the turn
+        if letter_guessed:
+            correct_guesses += 1
+        else:
+            incorrect_guesses += 1
+
+        print("Word to guess: " + ' '.join(display))
+
+        # Check if the word has been completely guessed
+        if '_' not in display:
+            game_over = True
+            score = calculate_score(correct_guesses, incorrect_guesses)
+            print(f"WOW, you won the game! The word was: {chosen_word}")
+            print(f"Your score: {score}")
+        elif lives == 0:
+            game_over = True
+            print("Sorry, you lost! The word was: " + chosen_word)
+
+    # Ask the player if they want to play again (moved out of the loop)
+    print("Would you like to play again? (Y/N):")
+    play_again_input = input().upper()
+    if play_again_input == 'Y':
+        play_game()
+
+
+def play_turn(chosen_word, lives, guessed_letters, display):
+    """
+    Plays a single turn of the Hangman game.
+    """
+    # Print the number of lives remaining
+    print("\nNumber of lives you have:", lives)
+
+    # Get the letter guessed by the player
+    guessed_letter = get_guessed_letter(guessed_letters)
+
+    # Check if the input is a valid single alphabet letter
+    if not is_valid_input(guessed_letter):
+        print("Please enter a valid single alphabet letter A-Z.")
+        return lives, guessed_letters, display, False
+
+    # Check if the letter has already been guessed
+    if guessed_letter in guessed_letters:
+        print("You have already guessed this letter.")
+        return lives, guessed_letters, display, False
+
+    # Add the guessed letter to the list of guessed letters
+    guessed_letters.append(guessed_letter)
+
+    # Update the display based on the guessed letter
+    letter_guessed = update_display(chosen_word, guessed_letter, display)
+
+    # If the guessed letter is incorrect, show the hangman stage
+    if not letter_guessed:
+        lives -= 1
+        print("Sorry, wrong guess. Try another letter.")
+        print("Hangman stage:")
+        print(hangman_stages.stages[lives])
+
+    return lives, guessed_letters, display, letter_guessed
+
+
+def get_guessed_letter(guessed_letters):
+    '''
+    Gets a letter guessed by the player and converts it to uppercase.
+    '''
+    return input("Guess a letter: ").upper()
+
+
+def update_display(chosen_word, guessed_letter, display):
+    '''
+    Updates the display based on the guessed letter in the chosen word.
+    '''
+    letter_guessed = False
+    for position in range(len(chosen_word)):
+        letter = chosen_word[position]
+        if letter == guessed_letter:
+            display[position] = chosen_word[position]
+            letter_guessed = True
+    return letter_guessed
+
 
 # Call the play_hangman function to start the game
 play_hangman()
