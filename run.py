@@ -13,6 +13,9 @@ def choose_word():
 def initialize_display(word):
     return ['_' for _ in word]
 
+def is_valid_input(guessed_letter):
+    return guessed_letter.isalpha() and len(guessed_letter) == 1
+
 def play_hangman():
     chosen_word = choose_word()
     display = initialize_display(chosen_word)
@@ -27,6 +30,10 @@ def play_hangman():
     while not game_over:
         print("Number of lives you have:", lives)  # Print the number of lives
         guessed_letter = input("Guess a letter: ").upper()
+
+        if not is_valid_input(guessed_letter):
+            print("Please enter a valid single alphabet letter A-Z.")
+            continue
         
         if guessed_letter in guessed_letters:
             print("You have already guessed this letter.")
