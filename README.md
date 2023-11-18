@@ -113,6 +113,7 @@ If the player is a old player, it will check with the google sheet and welcome t
 ![old_user](assets/readme-assets/oldPlayer.PNG)
 
 Google sheet
+
 ![userlist](assets/readme-assets/googleSheet_beforeNewUser.PNG)
 
 ### Once Play Game is Started
@@ -150,10 +151,12 @@ After playing the second round score will update (old score + new score)
   ![updateScore_old](assets/readme-assets/updateScore_old.PNG)
 
   Google sheet - adding a new player
-![score_gs](assets/readme-assets/googleSheet_afterNewUser.PNG)
+
+  ![score_gs](assets/readme-assets/googleSheet_afterNewUser.PNG)
 
   Google sheet - updating a old player
-![oldPlayer_GS](assets/readme-assets/oldPlayer_GS.PNG)
+
+  ![oldPlayer_GS](assets/readme-assets/oldPlayer_GS.PNG)
 
 * Whether the player wins or loses the game, the player has the option to continue the game.
 ![play_again](assets/readme-assets/play_again.PNG)
