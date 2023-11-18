@@ -210,12 +210,33 @@ The breakdown of the data model is as follows:
 
 ## Testing Phase
 I have manually tested this project by doing the following:
-  - Tested in my local terminal and the Code Institute Heroku terminal.
-  - Give invalid inputs: to check whether it only considers alphabetic letters and not to lose a life when a number, a special character, or a space is given.
-  - PEP8: Passed the code through PEP8 linter and confirmed there are no problems.
+1. Tested in my local terminal and the Code Institute Heroku terminal.
+2. Give invalid inputs: to check whether it only considers alphabetic letters and not to lose a life when a number, a special character, or a space is given.
+3. PEP8: Passed the code through PEP8 linter and confirmed there are no problems.
 
-W291 trailing whitespace
-trailing_whitespace
+**Solved Bugs**
+  - Ready to play [Y/N]? when the player type 'N', Still start the game - to fix this, I add
+  `if start_game != 'Y':`
+        `print("Goodbye!")`
+        `return`
+  - Not to repeat the welcome message if the player decides to continue playing, I modify the `if play_again_input == 'Y':` by changing it as
+   `if play_again_input != 'Y':`
+            `print("Goodbye!")`
+            `return`
+        `else:`
+            `start_game = None`
+  - Not exit the game when the player selects 'N' - to fix this, use the `break` command.
+  - While running the program, I found that there is a syntax SyntaxWarning for hangman stages (**hangman_stages.py:1: SyntaxWarning: invalid escape sequence '\ '**). To make sure the backslashes won't be treated as escape characters, I used the **r** prefix.
+  - While running the program, I found that the Ascii hangman stages were appearing in the incorrect order. To fix it, I changed the Ascii figure order in the hangman_stages.py file.
+  - When using the validator, I found the issue **W291 trailing whitespace** in the welcome ascii art. To fix the issue, I have removed the trailing whitespace at the end.
+
+
+**Remaining Bugs**
+No bugs are remaining
+
+**Validator Testing**
+PEP8 - No errors were returned from https://pep8ci.herokuapp.com/
+![validator](assets/readme-assets/PEP8.PNG)
 
 ## Libraries
 ### random:
@@ -225,23 +246,25 @@ The Python file called **hangman_stages** is teated as a custom module that cont
 
 ## Deployment
 
-### Playing on a Local machine:
 ### Final Deployment to Heroku:
-
+This project was deployed using Code Institue's mock terminal for Heroku.
+Steps of deployment:
+  - Clone the repository.
+  - Create a new Heroku app.
+  - Set the buildbacks to `Python` and `NodeJS` in order.
+  - Link the Heroku app to the GitHub repository.
+  - Click on Deploy.
 
 ## Credits
 ### Content
-* The word list was taken from [BrandonKirklen](https://github.com/Tom25/Hangman/blob/master/wordlist.txt).
-* The code idea to do the project using tkinter GUI is taken from [CodeSploit](https://www.youtube.com/watch?v=99zOhml1-6s).
+* ASCII hangman art was taken from [
+chrishorton](https://gist.github.com/chrishorton/8510732aa9a80a03c829b09f12e20d9c).
 * The help for some error handling was taken from [BrandonKirklen](https://github.com/Tom25/Hangman/blob/master/hangman.py).
-
-### Media
-* The Rag dall image used as the hangman was taken from the artist [Fernanda Mello](https://fehcm.artstation.com/projects/L3EVOR).
-* All images used in the project was created using [Photopea](https://www.photopea.com/) online editor.
+* Welcome ASCII art was generated from [Seotoolbelt](https://seotoolbelt.co/tools/ascii-art-generator/#csv-tab)
+* Steps of deployment for readme file was take from the Code Institute's [Sample README.md](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+PE_PAGPPF+2021_Q2/courseware/b3378fc1159e43e3b70916fdefdfae51/605f34e006594dc4ae19f5e60ec75e2e/).
 
 ### Acknowledgements
 * Inspirational support from [Jenny's Lectures CS IT](https://www.youtube.com/watch?v=tMJbCWHAWQ4)
 * Took the support from [Open Source Options](https://www.youtube.com/watch?v=D7zfEZGbu5A) to learn Run Python Scripts from the Local Terminal.
-
-* The the Code Institute Tutor Assistance for helping me with the correct guidance.
+* Grammatical and spelling checks were done using [QuillBot](https://quillbot.com/grammar-check).
 * Last but not least, my mentor, Medale Oluwafemi, for his invaluable guidance.
