@@ -9,37 +9,53 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
+# Define the constant variables
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('score_board')
-# Define the scoring constants
 CORRECT_GUESS_SCORE = 10
 INCORRECT_GUESS_PENALTY = 5
 
-'''
-score = SHEET.worksheet('score')
-data = score.get_all_values()
-print(data)
-'''
 
-def get_username():
+def get_username(existing_username=None):
     '''
-    to get the username from the user
+    Get the username from the user.
+    If an existing username is provided,
+    return it without asking for a new one.
     '''
-    print("When you select a username DON'T give SPACE\n")
-    data_username = input('Please enter your username: ')
-    print(f"Username given is {data_username}")
-    return data_username
+    if existing_username:
+        print(f"Welcome back, {existing_username}!")
+        return existing_username
+    else:
+        print("When you select a username DON'T give SPACE\n")
+        data_username = input('Please enter your username: ')
+        print(f"OK {data_username} lets play HANGMAN\n")
+        return data_username
 
 
 def update_scoreboard(username, score):
-    '''
-    Update the 'score_board' sheet with the username and score
-    '''
+    """
+    Update the 'score_board' sheet with the username and score.
+    If the username already exists, add the new score to the old score.
+    """
     try:
-        score_sheet = SHEET.get_worksheet(0)
-        score_sheet.append_row([username, score])
+        score_sheet = SHEET.get_worksheet(0)  # Assuming the first sheet is the 'score_board'
+        data = score_sheet.get_all_records()
+
+        # Check if the username already exists in the sheet
+        user_exists = any(entry['username'] == username for entry in data)
+
+        if user_exists:
+            # If the user exists, update the existing row with the new score
+            for entry in data:
+                if entry['username'] == username:
+                    entry['score'] += score
+                    break
+        else:
+            # If the user doesn't exist, add a new row for the user
+            score_sheet.append_row([username, score])
+
         print("Score updated successfully!")
     except Exception as e:
         print(f"Error updating score: {e}")
@@ -117,6 +133,7 @@ def execute_hangman_game():
     '''
     # Whether the welcome message has been displayed
     welcome_displayed = False
+    existing_username = None  # Initialize existing_username
 
     # Main loop for the game
     while True:
@@ -146,13 +163,16 @@ def execute_hangman_game():
                 return
 
             # Get the username
-            username = get_username()
+            username = get_username(existing_username)
 
             # Play the game
             score = play_game(username)
 
             # Update the scoreboard
             update_scoreboard(username, score)
+
+            # Set existing_username for the next iteration
+            existing_username = username
 
             # Ask the player if they want to play again
             play_again_input = input(
