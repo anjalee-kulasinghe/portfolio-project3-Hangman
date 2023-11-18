@@ -15,7 +15,6 @@ The game continues until the guessing player successfully guesses the word or th
 # Table of Contents
 - [Demo](#demo)
   - [A live demo to the website can be found here](#a-live-demo-to-the-website-can-be-found-here)
-- [How to Play:](#how-to-play)
 - [Planning Phase](#planning-phase)
   - [User stories:](#user-stories)
   - [Site Aims:](#site-aims)
@@ -46,39 +45,29 @@ The game continues until the guessing player successfully guesses the word or th
 
 ### A live demo to the website can be found [here](https://portfolio-project3-hangman-654eb8cab16a.herokuapp.com/)
 
-
-## How to Play:
-- The system will provide a random word, reflecting the number of letters of the word by dash marks.
-- Click on the letter buttons to guess the word.
-- If the guessed letter is correct, the system will reveal all occurrences of that letter in the word.
-- Each wrong guess will add a part for the hangman.
-- Six incorrect guesses will end the game. 
-- Try to guess the word and increase your score!
-
-
 ## Planning Phase
 ### User stories:
 - As a player, I want to start a new game so that I can begin guessing a new word.
-- As a player, I want to see the number of letters in the word represented by dashes, so that I know how many letters I need to guess.
+- As a player, I want to see the number of letters in the word represented by dashes so that I know how many letters I need to guess.
 - As a player, I want to be able to guess a letter and see if it is in the word, so that I can progress in solving the puzzle.
 - As a player, I want a visual representation of the Hangman figure to track my progress and avoid making too many incorrect guesses.
-- As a player, I want to see the letters I have already guessed, so that I don't accidentally repeat guesses.
-- As a player, I want the option to quit the game and start a new one at any time.
+- As a player, I want to see the letters I have already guessed so that I don't lose a life.
 - As a player, I want to be notified when I win the game by correctly guessing the word.
 - As a player, I want to be notified when I lose the game by making too many incorrect guesses.
 - As a player, I want a variety of words to guess to keep the game interesting and challenging.
 - As a player, I want to be able to see my score or progress in the game.
+- As a player, I want to continue or exit the game.
 - As a player, I want the game to be visually appealing and user-friendly.
 - As a player, I want to play an enjoyable game of the classic hangman game by myself.
 
 ### Site Aims:
 1. Entertainment:
-  - Provide a fun and engaging experience for users who enjoy playing word games.
-  - Offer a casual and entertaining way for users to spend their leisure time.
+  - Provide a fun and engaging experience for player who enjoy playing word games.
+  - Offer a casual and entertaining way for the player to spend their leisure time.
 2. Education:
-  - Reinforce vocabulary and spelling skills by incorporating a variety of words for players to guess.
-3. User Engagement:
-  - Encourage users to return by providing a user-friendly and enjoyable game environment.
+  - Emphasize vocabulary and spelling skills by including a variety of words for players to guess.
+3. Player Engagement:
+  - Encourage the player to return by providing a simple, easy to understand game environment.
 4. Learning and Improvement:
   - Offer a positive learning experience by providing feedback on correct and incorrect guesses.
   - Motivate players to improve their word-guessing skills over time.
@@ -86,11 +75,11 @@ The game continues until the guessing player successfully guesses the word or th
 ### How Will This Be Achieved:
 1. Entertainment:
   - Diverse Word Database: Include a wide range of words from different categories to keep the game interesting.
-  - Engaging User Interface: Design an attractive and intuitive interface to enhance the overall gaming experience.
+  - Engaging User Interface: Design a simple interface to increase the overall gaming experience.
 2. Education:
   - Word Categories: Categorize words based on difficulty levels or themes (e.g., science, geography, history) to cater to different learning objectives.
   - Progress Tracking: Allow players to track their progress in terms of the words they have successfully guessed, promoting a sense of accomplishment.
-3. User Engagement:
+3. Player Engagement:
   - Regular Updates: Keep the game content fresh by regularly updating the word database, introducing new features, or hosting events.
 4. Learning and Improvement:
   - Feedback Mechanism: Provide immediate feedback on each guessed letter, indicating whether it is correct or incorrect.
@@ -98,7 +87,7 @@ The game continues until the guessing player successfully guesses the word or th
 5. Motivation for Improvement:
   - Achievements and Rewards: Introduce achievements or rewards for reaching milestones, encouraging players to strive for continuous improvement.
 6. Accessibility:
-  - User-Friendly Controls: Design intuitive controls and interfaces to make the game accessible to users of all ages and skill levels.
+  - User-Friendly Controls: Implement natural commands, to ensure the game is easily accessible for players of various ages and skill levels.
 
 ### Game Flow Chart:
 To understand the steps required in order to program the game, I created the below flowchart using lucid charts.
@@ -106,8 +95,14 @@ To understand the steps required in order to program the game, I created the bel
 
 ## Features
 ### Welcome Screen:
-From the welcome screen, the user will get the guidance 'How to Play the Game'.
+From the welcome screen, the player will get the guidance 'How to Play the Game'.
 ![welcome](assets/readme-assets/welcome.PNG)
+
+Then the system will confirm whether the player wants to play the game and is ready to start.
+The player can exit the game by typing 'N'.
+![welcome_exit](assets/readme-assets/welcome_exit.PNG)
+
+![welcome_exit](assets/readme-assets/welcome_exit2.PNG)
 
 ### Once Play Game is Started:
 * The player can see the dash lines for the secret word.
@@ -169,56 +164,52 @@ Below are the things that would take my current MVP to the next level:
    - Develop a multiplayer mode where users can play against each other. This could involve taking turns guessing words or competing in real-time.
 6. Achievements and Badges:
    - Introduce achievements or badges for completing specific challenges, reaching high scores, or mastering certain categories.
-7. Customizable Hangman Images:
-   - Allow users to choose from a selection of hangman images or upload their own custom images to personalize the game.
-8. Sound Effects and Music:
+7. Sound Effects and Music:
    - Incorporate sound effects for correct and incorrect guesses, as well as background music to enhance the gaming experience.
-9. Leaderboards:
+8. Leaderboards:
    - Create online leaderboards to showcase top scores globally or within specific categories. This encourages friendly competition among players.
-10. Responsive Design:
-   - Ensure the game is fully responsive to different screen sizes, making it accessible and enjoyable on various devices.
+9. User Interface:
+   - Design an attractive and intuitive interface to enhance the overall gaming experience.
 
 ## Data Model
-The data model revolves around maintaining the state of the game, handling user input, updating the graphical interface, and managing resources. The code combines Tkinter GUI elements, game logic, and file operations to create a simple Hangman game.
+This is a text-based Hangman game.
 
-### Overview
+### Overview of Functions:
 The breakdown of the data model is as follows:
-* Game State Variables:
-  * **score:** An integer representing the player's score.
-  * **run:** A boolean indicating whether the game is currently running.
-  * **show_welcome_message:** A boolean variable to track whether to show the welcome message.
 
-* Tkinter Window and GUI Elements:
-  * **root:** The Tkinter main window that serves as the container for all GUI elements.
-  * **buttons:** A list to store Tkinter Button widgets representing letter buttons.
-  * **dashes_labels:** A list to store Tkinter Label widgets representing the dashes for the letters in the word.
-  * **hangman_label:** A Tkinter Label widget displaying the hangman image.
-  * **score_label:** A Tkinter Label widget displaying the player's score.
+1. Word Selection:
+  - The **choose_word** function reads a list of words from a text file (**words.txt**), selects a random word, and converts it to uppercase.
+2. Display Initialization:
+  - The **initialize_display** function initializes a display for the chosen word with underscores, one for each letter.
+3.	Input Validation:
+  - The **is_valid_input** function checks if a guessed letter is a valid input, ensuring it is an alphabet letter and has a length of 1.
+4.	Welcome Message:
+  - The **print_welcome** function displays a welcome message and instructions on how to play the game.
+5.	Scoring Constants:
+  - CORRECT_GUESS_SCORE and INCORRECT_GUESS_PENALTY are constants used for scoring.
+6.	Game Loop:
+  - The **execute_hangman_game** function contains the main game loop.
+    - It displays the welcome message if not already displayed.
+    - Asks the player if they want to start the game, and if not, exits the game.
+    - Checks if the player is ready to play.
+    - States the play_game function to start the actual game.
+    - Asks if the player wants to play again after finishing a game.
+7.	Ready Status:
+  - The **get_ready_status** function asks the player if they are ready to play and returns True if the input is 'Y'.
+8.	Game Logic:
+  - The **play_game** function initializes the game, plays turns until the game is over, and asks if the player wants to play again.
+  - The **play_turn** function handles a single turn, updating the display, guessed letters, and lives.
+  - The **get_guessed_letter** function triggers the user to input a letter for their guess.
+  - The **update_display** function updates the display based on the guessed letter.
+9.	Score Calculation:
+•	The calculate_score function calculates the player's score based on correct and incorrect guesses.
+10.	Hangman Stages:
+•	The hangman_stages module seems to contain visual representations of the Hangman stages for incorrect guesses.
+11.	Game Start:
+•	The game is started by calling the execute_hangman_game function at the end of the script.
+Overall, your code follows a modular structure and uses functions to encapsulate different aspects of the Hangman game. It provides a good separation of concerns and is readable.
 
-* Hangman-related Variables:
-  * **count:** An integer representing the count of incorrect guesses (used to determine which hangman image to display).
-  * **win_count:** An integer representing the count of correct guesses.
-  * **selected_word:** A string representing the randomly chosen word for the current game.
 
-* Game Functions:
-  * **welcome_message():** Displays a welcome message using a Tkinter messagebox.
-  * **check(letter, button_idx):** Handles player clicks on letter buttons, updates game state based on guesses, and checks for win/loss conditions.
-  * **update_hangman():** Updates the displayed hangman image based on the count of incorrect guesses.
-  * **close():** Handles the exit button, prompting the user with a confirmation message before exiting.
-
-* Main Loop and Game Initialization:
-  * A while loop (**while run:**) that controls the flow of the game.
-  * The loop initializes a Tkinter window (root) and sets up the game elements.
-  * The loop continues as long as the **run** variable is **True**.
-
-* Resource Loading:
-  * Images for letters, hangman stages, and an exit button are loaded using the Tkinter **PhotoImage** class and stored in relevant dictionaries or lists (**image_dict**, **hangman_images**).
-
-* File Handling:
-  * The code attempts to open and read from a file named 'words.txt' to obtain a list of words for the game. It handles potential errors like file not found or reading errors.
-
-*Error Handling:
-  * There are some basic error-handling mechanisms, such as handling file-related errors and general exceptions during Tkinter window creation.
 
 ### Logic Flow:
  The logic flow involves the continuous execution of the main loop, where the Tkinter window is created, user input is handled, and the game state is updated based on correct or incorrect guesses. The loop continues until the player decides to exit the game.

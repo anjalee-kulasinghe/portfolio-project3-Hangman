@@ -146,6 +146,8 @@ def play_game():
     print("Word to guess: " + " ".join(display))
     # Continue the game until it's over
     while not game_over:
+        # Show guessed letters
+        print("Guessed letters: " + ' '.join(guessed_letters))
         # Play a turn and get the updated state
         lives, guessed_letters, display, letter_guessed = play_turn(
             chosen_word, lives, guessed_letters, display
@@ -163,11 +165,11 @@ def play_game():
         if "_" not in display:
             game_over = True
             score = calculate_score(correct_guesses, incorrect_guesses)
-            print(f"WOW, you won the game! The word was: {chosen_word}")
+            print(f"\nWOW, you won the game! The word was: {chosen_word}")
             print(f"Your score: {score}")
         elif lives == 0:
             game_over = True
-            print("Sorry, you lost! The word was: " + chosen_word)
+            print("\nSorry, you lost! The word was: " + chosen_word)
 
     # Ask the player if they want to play again (moved out of the loop)
     print("Would you like to play again? (Y/N):")
@@ -205,9 +207,11 @@ def play_turn(chosen_word, lives, guessed_letters, display):
     # If the guessed letter is incorrect, show the hangman stage
     if not letter_guessed:
         lives -= 1
-        print("Sorry, wrong guess. Try another letter.")
+        print("\nOops sorry, wrong guess. Try another letter.")
         print("Hangman stage:")
         print(hangman_stages.stages[lives])
+    else:
+        print("\nYes, it's a correct guess!")
 
     return lives, guessed_letters, display, letter_guessed
 
