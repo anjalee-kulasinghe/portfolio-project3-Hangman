@@ -233,6 +233,7 @@ I have manually tested this project by doing the following:
         `else:`
             `print("Invalid entry. Please enter 'Y' or 'N'.")`
   - Not exit the game when the player selects 'N' - to fix this, use the `break` command.
+  - Player needs to answer two times to the question, 'Would you like to play again?' at the end if the player wants to exit. To fix this issue, I removed asking that question from the **play_game():** function and handled the exit part only from the **execute_hangman_game():**. Earlier, I used the `break` in the exit the game loop. I replace it with `return`.
   - While running the program, I found that there is a syntax SyntaxWarning for hangman stages (**hangman_stages.py:1: SyntaxWarning: invalid escape sequence '\ '**). To make sure the backslashes won't be treated as escape characters, I used the **r** prefix.
   - While running the program, I found that the Ascii hangman stages were appearing in the incorrect order. To fix it, I changed the Ascii figure order in the hangman_stages.py file.
   - When using the validator, I found the issue **W291 trailing whitespace** in the welcome ascii art. To fix the issue, I have removed the trailing whitespace at the end.

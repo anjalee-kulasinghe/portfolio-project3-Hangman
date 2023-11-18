@@ -54,11 +54,11 @@ __        _______ _     ____ ___  __  __ _____
     print("How to play:")
     print("1. The secret word, underscore revels the number of letters.")
     print("2. Type a letter to guess the word.")
-    print("3. Correct letter guessed, reveal all occurrences in the word")
+    print("3. Correct letter guessed, reveal all occurrences in the word.")
     print("4. Each wrong guess will add a part for the hangman.")
     print("5. Six incorrect guesses will end the game.")
     print("6. Try to guess the word and increase your score!")
-    print("7. Each correct guess = 10 marks. Each wrong guess -5 marks")
+    print("7. Each correct guess = 10 marks. Each wrong guess -5 marks.")
     print("8. Enjoy the game!")
 
 
