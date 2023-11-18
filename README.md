@@ -24,7 +24,7 @@ The game continues until the guessing player successfully guesses the word or th
   - [Welcome Screen:](#welcome-screen)
   - [Once Play Game is Started:](#once-play-game-is-started)
   - [Error Handling:](#error-handling)
-  - [Future-Enhancements:](#future-enhancements) 
+  - [Future-Enhancements:](#future-enhancements)
 - [Data Model](#testing)
 - [Testing](#testing)
   - [Validator Testing](#validator-testing)
@@ -107,7 +107,7 @@ The player can exit the game by typing 'N'.
 ### Once Play Game is Started:
 * The player can see the dash lines for the secret word.
 ![strat_page](assets/readme-assets/start.PNG)
- 
+
 * If the player guesses the letter correctly, it will replace the dash line.
 ![correct_guess](assets/readme-assets/correct_guess.PNG)
 
@@ -141,7 +141,7 @@ The player can exit the game by typing 'N'.
 
 ### Error Handling:
 During the development process, error handling is done to make sure the player will have a smoother experience and to make the code more robust.
-When developing the code error handling is implemented using try-except blocks. 
+When developing the code error handling is implemented using try-except blocks.
 * File Not Found:
   - If the 'words.txt' file is not found, the code prints an error message and exits the program.
 
@@ -214,6 +214,8 @@ I have manually tested this project by doing the following:
   - Give invalid inputs: to check whether it only considers alphabetic letters and not to lose a life when a number, a special character, or a space is given.
   - PEP8: Passed the code through PEP8 linter and confirmed there are no problems.
 
+W291 trailing whitespace
+trailing_whitespace
 
 ## Libraries
 ### random:
