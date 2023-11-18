@@ -232,5 +232,5 @@ def update_display(chosen_word, guessed_letter, display):
     return letter_guessed
 
 
-# Call the play_hangman function to start the game
-play_hangman()
+# Call the execute_hangman_game function to start the game
+execute_hangman_game()
