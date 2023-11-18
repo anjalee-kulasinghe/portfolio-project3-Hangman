@@ -18,15 +18,17 @@ CORRECT_GUESS_SCORE = 10
 INCORRECT_GUESS_PENALTY = 5
 
 
-def get_username():
-    '''
+def get_username(existing_username=None):
+    """
     Get the username from the user.
     If an existing username is provided,
     return it without asking for a new one.
-    '''
-    existing_username = None
-
+    """
     while True:
+        if existing_username:
+            print(f"Welcome back, {existing_username}!")
+            return existing_username
+
         data_username = input('Please enter your username: ')
 
         # Check if the username already exists in the sheet
@@ -34,48 +36,54 @@ def get_username():
 
         if user_exists:
             print(f"Welcome back, {data_username}!")
-            existing_username = data_username
-            break
+            return data_username
         else:
             print(f"Welcome, {data_username}! Let's play HANGMAN\n")
-            break
-
-    return existing_username
+            return data_username
 
 def get_sheet_data():
     """
     Retrieve the data from the 'score_board' sheet.
+    Each entry in the data includes the username, score, and index.
     """
     try:
-        score_sheet = SHEET.get_worksheet(0)  # Assuming the first sheet is the 'score_board'
-        return score_sheet.get_all_records()
+        score_sheet = SHEET.get_worksheet(0)
+        records = score_sheet.get_all_records()
+        data = [{'username': entry['username'], 'score': entry['score'], 'index': i + 2} for i, entry in enumerate(records)]
+        return data
     except Exception as e:
         print(f"Error retrieving sheet data: {e}")
         return []
 
+
 def update_scoreboard(username, score):
     """
-    Update the 'score_board' sheet with the use rname and score.
+    Update the 'score_board' sheet with the username and score.
     If the username already exists, add the new score to the old score.
     """
     try:
         score_sheet = SHEET.get_worksheet(0)
+        data = get_sheet_data()
 
-        # Find the row number corresponding to the username
-        user_row = None
-        for index, row in enumerate(score_sheet.col_values(1)):
-            if row == username:
-                user_row = index + 1
-                break
+        # Check if the username already exists in the sheet
+        user_exists = any(entry['username'] == username for entry in data)
 
-        if user_row is not None:
+        if user_exists:
             # If the user exists, update the existing row with the new score
-            current_score = int(score_sheet.cell(user_row, 2).value)
-            new_score = current_score + score
-            score_sheet.update_cell(user_row, 2, new_score)
+            for entry in data:
+                if entry['username'] == username:
+                    entry['score'] += score
+                    score_sheet.update_cell(entry['index'], 2, entry['score'])
+                    print(f"Updated score for {username} to {entry['score']}")
+                    break
         else:
             # If the user doesn't exist, add a new row for the user
-            score_sheet.append_row([username, score])
+            new_row = [username, score]
+            score_sheet.append_row(new_row)
+            print(f"Appended new row for {username} with score {score}")
+
+            # Update the local data with the new row
+            data = get_sheet_data()  # Refresh the local data
 
         print("Score updated successfully!")
     except Exception as e:
@@ -184,7 +192,7 @@ def execute_hangman_game():
                 return
 
             # Get the username
-            username = get_username()
+            username = get_username(existing_username)
 
             # Play the game
             score = play_game(username)
