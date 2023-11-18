@@ -31,7 +31,9 @@ The game continues until the guessing player successfully guesses the word or th
   - [Remaining Bugs](#remaining-bugs)
   - [Validator Testing](#validator-testing)
 - [Libraries](#libraries)
-  - [random:](#random)
+  - [gspread](#gspread)
+  - [google.oauth2.service_account](#googleoauth2service_account)
+  - [random](#random)
 - [Deployment](#deployment)
     - [Final Deployment to Heroku](#final-deployment-to-heroku)
 - [Credits](#credits)
@@ -82,7 +84,7 @@ The game continues until the guessing player successfully guesses the word or th
   - Regular Updates: Keep the game content fresh by regularly updating the word database, introducing new features, or hosting events.
 4. Learning and Improvement:
   - Feedback Mechanism: Provide immediate feedback on each guessed letter, indicating whether it is correct or incorrect.
-  - Score Tracking: Implement a scoring system to track and display players' scores, encouraging healthy competition.
+  - Score Tracking: Implement a scoring system to track and display players' scores.
 5. Motivation for Improvement:
   - Achievements and Rewards: Introduce achievements or rewards for reaching milestones, encouraging players to strive for continuous improvement.
 6. Accessibility:
@@ -104,25 +106,34 @@ The player can exit the game by typing 'N'.
 
 ![welcome_exit](assets/readme-assets/welcome_exit2.PNG)
 
+If the player decided to play the game, player will asked to enter a username.
+![username](assets/readme-assets/newuser.PNG)
+
+If the player is a old player, it will check with the google sheet and welcome the old player
+![old_user](assets/readme-assets/oldPlayer.PNG)
+
+Google sheet
+![userlist](assets/readme-assets/googleSheet_beforeNewUser.PNG)
+
 ### Once Play Game is Started
 * The player can see the dash lines for the secret word.
-![strat_page](assets/readme-assets/start.PNG)
+  ![strat_page](assets/readme-assets/start.PNG)
 
 * If the player guesses the letter correctly, it will replace the dash line.
-![correct_guess](assets/readme-assets/correct_guess.PNG)
+  ![correct_guess](assets/readme-assets/correct_guess.PNG)
 
-![correct_guess_multiple](assets/readme-assets/multiple.PNG)
+  ![correct_guess_multiple](assets/readme-assets/multiple.PNG)
 
 * If the player guesses the wrong letter, it will start to draw the hangman.
 ![wrong_guess1](assets/readme-assets/wrong_guess1.PNG)
 
-![wrong_guess2](assets/readme-assets/wrong_guess2.PNG)
+  ![wrong_guess2](assets/readme-assets/wrong_guess2.PNG)
 
-![wrong_guess3](assets/readme-assets/wrong_guess3.PNG)
+  ![wrong_guess3](assets/readme-assets/wrong_guess3.PNG)
 
-![wrong_guess4](assets/readme-assets/wrong_guess4.PNG)
+  ![wrong_guess4](assets/readme-assets/wrong_guess4.PNG)
 
-![wrong_guess5](assets/readme-assets/wrong_guess5.PNG)
+  ![wrong_guess5](assets/readme-assets/wrong_guess5.PNG)
 
 * If the player guesses wrong six times, the hangman will be completed, and the player will lose the game.
 ![lost](assets/readme-assets/lost.PNG)
@@ -130,11 +141,24 @@ The player can exit the game by typing 'N'.
 * If the player guesses the word correctly, the player will win the game.
 ![Win](assets/readme-assets/win.PNG)
 
-* If the player wins the game, a score will be added.
+* If the player wins the game, a score will be added and the score and username will be added to the Google Sheet.
 ![score](assets/readme-assets/score.PNG)
+After playing the second round score will update (old score + new score)
+![updateScore](assets/readme-assets/updateScore.PNG)
+
+  If it is a old player same way the score will update and new score will display
+  ![updateScore_old](assets/readme-assets/updateScore_old.PNG)
+
+  Google sheet - adding a new player
+![score_gs](assets/readme-assets/googleSheet_afterNewUser.PNG)
+
+  Google sheet - updating a old player
+![oldPlayer_GS](assets/readme-assets/oldPlayer_GS.PNG)
 
 * Whether the player wins or loses the game, the player has the option to continue the game.
 ![play_again](assets/readme-assets/play_again.PNG)
+  If the player decides to continue the game, the player will be welcome back to the game.
+  ![welcome_back](assets/readme-assets/welcomeBack.PNG)
 
 * If the player wants, the player has a chance to exit the game.
 ![exit](assets/readme-assets/exit.PNG)
@@ -144,6 +168,7 @@ During the development process, error handling is done to make sure the player w
 When developing the code error handling is implemented using try-except blocks.
 * File Not Found:
   - If the 'words.txt' file is not found, the code prints an error message and exits the program.
+* Error handling is focused on capturing exceptions. This was very useful when external services (like Google Sheets) or file operations are used.
 
 
 ### Future-Enhancements
@@ -172,37 +197,42 @@ This is a text-based Hangman game.
 
 ### Overview of Functions
 The breakdown of the data model is as follows:
-
-1. Word Selection:
-  - The **choose_word** function reads a list of words from a text file (**words.txt**), selects a random word, and converts it to uppercase.
-2. Display Initialization:
-  - The **initialize_display** function initializes a display for the chosen word with underscores, one for each letter.
-3.	Input Validation:
-  - The **is_valid_input** function checks if a guessed letter is a valid input, ensuring it is an alphabet letter and has a length of 1.
-4.	Welcome Message:
-  - The **print_welcome** function displays a welcome message and instructions on how to play the game.
-5.	Scoring Constants:
-  - CORRECT_GUESS_SCORE and INCORRECT_GUESS_PENALTY are constants used for scoring.
-6.	Game Loop:
-  - The **execute_hangman_game** function contains the main game loop.
-    - It displays the welcome message if not already displayed.
-    - Asks the player if they want to start the game, and if not, exits the game.
-    - Checks if the player is ready to play.
-    - States the play_game function to start the actual game.
-    - Asks if the player wants to play again after finishing a game.
-7.	Ready Status:
-  - The **get_ready_status** function asks the player if they are ready to play and returns True if the input is 'Y'.
-8.	Game Logic:
-  - The **play_game** function initializes the game, plays turns until the game is over, and asks if the player wants to play again.
-  - The **play_turn** function handles a single turn of the game, updating the display, guessed letters, and lives.
-  - The **get_guessed_letter** function triggers the player to input a letter for their guess.
-  - The **update_display** function updates the display based on the guessed letter.
-9.	Score Calculation:
-  - The **calculate_score** function calculates the player's score based on correct and incorrect guesses.
-10.	Hangman Stages:
-  - The **hangman_stages** module contain visual representations of the Hangman stages for incorrect guesses.
-11.	Game Start:
-  - The game is started by calling the **execute_hangman_game** function at the end of the script.
+1. **get_username():**
+  - Gets the username from the user.
+  - If the username is an existing one, returns it without asking for a new one.
+2. **get_sheet_data():**
+  - Retrieves data from the 'score_board' google sheet.
+  - Each entry in the data includes the username, score, and index.
+3. **update_scoreboard():**
+  - Updates the 'score_board' sheet with the username and score.
+  - If the username already exists, adds the new score to the old score.
+4. **choose_word():**
+  - Reads a list of words from a text file ("words.txt").
+  - Randomly selects one word and converts it to uppercase.
+5. **initialize_display():**
+  - Initializes the display by creating a list of underscores that are equal to the letters of the word.
+6. **is_valid_input():**
+  - Checks if the inputted guessed letter is a valid single alphabet letter.
+7. **print_welcome():**
+  - Displays a welcome message and instructions on how to play the game.
+8. **calculate_score():**
+  - Calculates the player's score based on the number of correct and incorrect guesses.
+9. **execute_hangman_game():**
+  - Handles the execution of the hangman game.
+  - Displays the welcome message and cue the player to start.
+  - Manages multiple rounds of the game, updating the scoreboard after each round.
+10. **get_ready_status():**
+  - Checks if the player is ready to play the game.
+11. **play_game():**
+  - Plays the Hangman game, allowing the player to guess words.
+  - Displays the word to guess, handles turns, updates the scoreboard, and decide the game outcome.
+12. **play_turn():**
+  - Plays a single turn of the Hangman game.
+  - Gets the letter guessed by the player, updates the display, and manages incorrect guesses.
+13. **get_guessed_letter():**
+  - Gets a letter guessed by the player and converts it to uppercase.
+14. **update_display():**
+  - Updates the display by replacing the underscore with the letter based on the guessed letter in the chosen word.
 
 ### Logic Flow
  The logic flow involves the continuous execution of the game, where user input is handled, and the game state is updated based on correct or incorrect guesses. The loop continues until the player decides to exit the game.
@@ -237,6 +267,7 @@ I have manually tested this project by doing the following:
   - While running the program, I found that there is a syntax SyntaxWarning for hangman stages (**hangman_stages.py:1: SyntaxWarning: invalid escape sequence '\ '**). To make sure the backslashes won't be treated as escape characters, I used the **r** prefix.
   - While running the program, I found that the Ascii hangman stages were appearing in the incorrect order. To fix it, I changed the Ascii figure order in the hangman_stages.py file.
   - When using the validator, I found the issue **W291 trailing whitespace** in the welcome ascii art. To fix the issue, I have removed the trailing whitespace at the end.
+  - When I connet the programe with the Google sheet, new username did not record in the Google sheet. Only the score is recorded. To fix this in **get_username**function pass the variable `existing_username=None` and update the **execute_hangman_game** function accordingly.
 
 **Remaining Bugs**
   - No bugs are remaining
@@ -246,10 +277,14 @@ I have manually tested this project by doing the following:
 ![validator](assets/readme-assets/PEP8.PNG)
 
 ## Libraries
+### gspread
+Used for interacting with Google Sheets.
+### google.oauth2.service_account
+Specifically, the Credentials module from this library is used to handle authentication with Google Sheets using a service account file (creds.json).
 ### random
 This library is used for generating random numbers. In the code, it is used to select a random index for choosing a word from the list.
 
-The Python file called **hangman_stages** is teated as a custom module that contains ASCII art representations of the hangman stages.
+The Python file called **hangman_stages** is treated as a custom module that contains ASCII art representations of the hangman stages.
 
 ## Deployment
 
@@ -271,6 +306,7 @@ chrishorton](https://gist.github.com/chrishorton/8510732aa9a80a03c829b09f12e20d9
 * Steps of deployment for readme file was take from the Code Institute's [Sample README.md](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+PE_PAGPPF+2021_Q2/courseware/b3378fc1159e43e3b70916fdefdfae51/605f34e006594dc4ae19f5e60ec75e2e/).
 
 ### Acknowledgements
+* To do the connection with external services (Google Sheets) got the inspirational support from Code Institute's [Love Sandwiches - Essentials Project](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+LS101+2021_T1/courseware/293ee9d8ff3542d3b877137ed81b9a5b/58d3e90f9a2043908c62f31e51c15deb/)
 * Inspirational support from [Jenny's Lectures CS IT](https://www.youtube.com/watch?v=tMJbCWHAWQ4)
 * Took the support from [Open Source Options](https://www.youtube.com/watch?v=D7zfEZGbu5A) to learn Run Python Scripts from the Local Terminal.
 * Grammatical and spelling checks were done using [QuillBot](https://quillbot.com/grammar-check).
