@@ -194,7 +194,7 @@ The breakdown of the data model is as follows:
   - The **get_ready_status** function asks the player if they are ready to play and returns True if the input is 'Y'.
 8.	Game Logic:
   - The **play_game** function initializes the game, plays turns until the game is over, and asks if the player wants to play again.
-  - The **play_turn** function handles a single turn, updating the display, guessed letters, and lives.
+  - The **play_turn** function handles a single turn of the game, updating the display, guessed letters, and lives.
   - The **get_guessed_letter** function triggers the player to input a letter for their guess.
   - The **update_display** function updates the display based on the guessed letter.
 9.	Score Calculation:
@@ -225,6 +225,13 @@ I have manually tested this project by doing the following:
             `return`
         `else:`
             `start_game = None`
+  - Accept the invalid input when the player starts the game. To fix this issue, I used a while loop to check whether the player has included a character other than 'Y' or 'N'.
+   `while True:`
+        `user_input = input("\nReady to play [Y/N]? ").upper()`
+        `if user_input == "Y" or user_input == "N":`
+            `break'
+        `else:`
+            `print("Invalid entry. Please enter 'Y' or 'N'.")`
   - Not exit the game when the player selects 'N' - to fix this, use the `break` command.
   - While running the program, I found that there is a syntax SyntaxWarning for hangman stages (**hangman_stages.py:1: SyntaxWarning: invalid escape sequence '\ '**). To make sure the backslashes won't be treated as escape characters, I used the **r** prefix.
   - While running the program, I found that the Ascii hangman stages were appearing in the incorrect order. To fix it, I changed the Ascii figure order in the hangman_stages.py file.

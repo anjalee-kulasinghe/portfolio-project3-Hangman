@@ -58,7 +58,7 @@ __        _______ _     ____ ___  __  __ _____
     print("4. Each wrong guess will add a part for the hangman.")
     print("5. Six incorrect guesses will end the game.")
     print("6. Try to guess the word and increase your score!")
-    print("7. Maximum score = 50. Each wrong guess -5 marks")
+    print("7. Each correct guess = 10 marks. Each wrong guess -5 marks")
     print("8. Enjoy the game!")
 
 
@@ -74,57 +74,71 @@ def calculate_score(correct_guesses, incorrect_guesses):
 
 
 def execute_hangman_game():
-    # Display the welcome message only if it hasn't been displayed before
+    '''
+    Handle the execution of the hangman game.
+    '''
+    # Whether the welcome message has been displayed
     welcome_displayed = False
 
+    # Main loop for the game
     while True:
+        # Display the welcome message only if it hasn't been displayed before
         if not welcome_displayed:
             print_welcome()
             welcome_displayed = True
 
         # Ask the player if they want to start the game
-        print("\nWould you like to play the game? (Y/N):")
-        start_game = input().upper()
+        start_game = input(
+            "\nWould you like to start the game? (Y/N):"
+        ).upper()
 
         # If the player chooses not to play, exit the game
         if start_game != "Y":
             print("Goodbye!")
             break
 
-        # Check if the player is ready to play the game
-        ready_to_play = get_ready_status()
-        if not ready_to_play:
-            print("Goodbye!")
-            break
+        # Inner loop for playing multiple rounds
+        while True:
+            # Check if the player is ready to play the game
+            ready_to_play = get_ready_status()
 
-        # Play the game
-        play_game()
+            # If the player is not ready, exit the current game loop
+            if not ready_to_play:
+                print("Goodbye!")
+                return
 
-        # Ask the player if they want to play again
-        print("\nWould you like to play again? (Y/N):")
-        play_again_input = input().upper()
+            # Play the game
+            play_game()
 
-        # If the player does not want to play again, exit the game
-        if play_again_input != "Y":
-            print("Goodbye!")
-            break
+            # Ask the player if they want to play again
+            play_again_input = input(
+                "\nWould you like to play again? (Y/N):"
+            ).upper()
 
-        # Set welcome_displayed to True to avoid repeating the welcome message
-        welcome_displayed = True
+            # If the player doesn't want to play again, exit the current loop
+            if play_again_input != "Y":
+                print("Goodbye!")
+                return
 
 
 def get_ready_status():
     """
     Check if the player is ready to play the game
     """
-    user_input = input("\nReady to play [Y/N]? ").upper()
-    return user_input == "Y"
+    while True:
+        user_input = input("\nReady to play [Y/N]? ").upper()
+        if user_input == "Y":
+            return True
+        elif user_input == "N":
+            return False
+        else:
+            print("Invalid entry. Please enter 'Y' or 'N'.")
 
 
 def play_game():
     """
     Plays the Hangman game, allowing the player to guess words.
-    The game includes displaying a welcome message,
+    This function includes displaying a welcome message,
     prompting the player to start,
     checking if the player is ready,
     playing the actual game,
@@ -168,12 +182,6 @@ def play_game():
         elif lives == 0:
             game_over = True
             print("\nSorry, you lost! The word was: " + chosen_word)
-
-    # Ask the player if they want to play again (moved out of the loop)
-    print("Would you like to play again? (Y/N):")
-    play_again_input = input().upper()
-    if play_again_input == "Y":
-        play_game()
 
 
 def play_turn(chosen_word, lives, guessed_letters, display):
