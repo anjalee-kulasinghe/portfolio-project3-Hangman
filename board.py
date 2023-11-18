@@ -40,18 +40,20 @@ def update_scoreboard(username, score):
     If the username already exists, add the new score to the old score.
     """
     try:
-        score_sheet = SHEET.get_worksheet(0)  # Assuming the first sheet is the 'score_board'
-        data = score_sheet.get_all_records()
+        score_sheet = SHEET.get_worksheet(0)
 
-        # Check if the username already exists in the sheet
-        user_exists = any(entry['username'] == username for entry in data)
+        # Find the row number corresponding to the username
+        user_row = None
+        for index, row in enumerate(score_sheet.col_values(1)):
+            if row == username:
+                user_row = index + 1
+                break
 
-        if user_exists:
+        if user_row is not None:
             # If the user exists, update the existing row with the new score
-            for entry in data:
-                if entry['username'] == username:
-                    entry['score'] += score
-                    break
+            current_score = int(score_sheet.cell(user_row, 2).value)
+            new_score = current_score + score
+            score_sheet.update_cell(user_row, 2, new_score)
         else:
             # If the user doesn't exist, add a new row for the user
             score_sheet.append_row([username, score])
