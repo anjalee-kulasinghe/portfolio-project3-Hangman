@@ -14,6 +14,17 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('score_board')
 
+'''
 score = SHEET.worksheet('score')
 data = score.get_all_values()
 print(data)
+'''
+
+def get_username():
+    '''
+    to get the username from the user
+    '''
+    data_username = input('Please enter your username: ')
+    print(f"Username given is {data_username}")
+
+get_username()
