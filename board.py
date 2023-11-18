@@ -18,25 +18,44 @@ CORRECT_GUESS_SCORE = 10
 INCORRECT_GUESS_PENALTY = 5
 
 
-def get_username(existing_username=None):
+def get_username():
     '''
     Get the username from the user.
     If an existing username is provided,
     return it without asking for a new one.
     '''
-    if existing_username:
-        print(f"Welcome back, {existing_username}!")
-        return existing_username
-    else:
-        print("When you select a username DON'T give SPACE\n")
-        data_username = input('Please enter your username: ')
-        print(f"OK {data_username} lets play HANGMAN\n")
-        return data_username
+    existing_username = None
 
+    while True:
+        data_username = input('Please enter your username: ')
+
+        # Check if the username already exists in the sheet
+        user_exists = any(entry['username'] == data_username for entry in get_sheet_data())
+
+        if user_exists:
+            print(f"Welcome back, {data_username}!")
+            existing_username = data_username
+            break
+        else:
+            print(f"Welcome, {data_username}! Let's play HANGMAN\n")
+            break
+
+    return existing_username
+
+def get_sheet_data():
+    """
+    Retrieve the data from the 'score_board' sheet.
+    """
+    try:
+        score_sheet = SHEET.get_worksheet(0)  # Assuming the first sheet is the 'score_board'
+        return score_sheet.get_all_records()
+    except Exception as e:
+        print(f"Error retrieving sheet data: {e}")
+        return []
 
 def update_scoreboard(username, score):
     """
-    Update the 'score_board' sheet with the username and score.
+    Update the 'score_board' sheet with the use rname and score.
     If the username already exists, add the new score to the old score.
     """
     try:
@@ -165,7 +184,7 @@ def execute_hangman_game():
                 return
 
             # Get the username
-            username = get_username(existing_username)
+            username = get_username()
 
             # Play the game
             score = play_game(username)
