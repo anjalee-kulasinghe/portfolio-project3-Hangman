@@ -8,12 +8,12 @@ INCORRECT_GUESS_PENALTY = 5
 
 
 def choose_word():
-    '''
+    """
     Read a list of words from a text file and
     randomly select one word and converted to uppercase.
-    '''
+    """
     try:
-        with open('words.txt', 'r') as file:
+        with open("words.txt", "r") as file:
             word_list = file.readlines()
         return random.choice(word_list).strip().upper()
     except FileNotFoundError:
@@ -22,24 +22,25 @@ def choose_word():
 
 
 def initialize_display(word):
-    '''
+    """
     Initializes a display for a word by creating a list of underscores.
-    '''
-    return ['_' for _ in word]
+    """
+    return ["_" for _ in word]
 
 
 def is_valid_input(guessed_letter):
-    '''
+    """
     Checks if the inputted guessed letter is valid.
-    '''
+    """
     return guessed_letter.isalpha() and len(guessed_letter) == 1
 
 
 def print_welcome():
-    '''
+    """
     Welcome message and How to play.
-    '''
-    print(r"""
+    """
+    print(
+        r"""
 __        _______ _     ____ ___  __  __ _____ 
  \ \      / / ____| |   / ___/ _ \|  \/  | ____|
   \ \ /\ / /|  _| | |  | |  | | | | |\/| |  _|  
@@ -50,13 +51,12 @@ __        _______ _     ____ ___  __  __ _____
    | || | | | | |_| | / _ \ |  \| | |  _| |\/| | / _ \ |  \| |
    | || |_| | |  _  |/ ___ \| |\  | |_| | |  | |/ ___ \| |\  |
    |_| \___/  |_| |_/_/   \_\_| \_|\____|_|  |_/_/   \_\_| \_|
-""")
+"""
+    )
     print("How to play:")
     print("1. The secret word, underscore revels the number of letters.")
     print("2. Type a letter to guess the word.")
-    print(
-        "3. Correct letter guessed, reveal all occurrences in the word"
-    )
+    print("3. Correct letter guessed, reveal all occurrences in the word")
     print("4. Each wrong guess will add a part for the hangman.")
     print("5. Six incorrect guesses will end the game.")
     print("6. Try to guess the word and increase your score!")
@@ -65,13 +65,13 @@ __        _______ _     ____ ___  __  __ _____
 
 
 def calculate_score(correct_guesses, incorrect_guesses):
-    '''
-        Calculate the player's score based on
-        the number of correct and incorrect guesses.
-    '''
+    """
+    Calculate the player's score based on
+    the number of correct and incorrect guesses.
+    """
     return (
-        correct_guesses * CORRECT_GUESS_SCORE -
-        incorrect_guesses * INCORRECT_GUESS_PENALTY
+        correct_guesses * CORRECT_GUESS_SCORE
+        - incorrect_guesses * INCORRECT_GUESS_PENALTY
     )
 
 
@@ -89,7 +89,7 @@ def execute_hangman_game():
         start_game = input().upper()
 
         # If the player chooses not to play, exit the game
-        if start_game != 'Y':
+        if start_game != "Y":
             print("Goodbye!")
             break
 
@@ -107,7 +107,7 @@ def execute_hangman_game():
         play_again_input = input().upper()
 
         # If the player does not want to play again, exit the game
-        if play_again_input != 'Y':
+        if play_again_input != "Y":
             print("Goodbye!")
             break
 
@@ -116,11 +116,11 @@ def execute_hangman_game():
 
 
 def get_ready_status():
-    '''
+    """
     Check if the player is ready to play the game
-    '''
+    """
     user_input = input("\nReady to play [Y/N]? ").upper()
-    return user_input == 'Y'
+    return user_input == "Y"
 
 
 def play_game():
@@ -143,7 +143,7 @@ def play_game():
     incorrect_guesses = 0
     game_over = False
 
-    print("Word to guess: " + ' '.join(display))
+    print("Word to guess: " + " ".join(display))
     # Continue the game until it's over
     while not game_over:
         # Play a turn and get the updated state
@@ -157,10 +157,10 @@ def play_game():
         else:
             incorrect_guesses += 1
 
-        print("Word to guess: " + ' '.join(display))
+        print("Word to guess: " + " ".join(display))
 
         # Check if the word has been completely guessed
-        if '_' not in display:
+        if "_" not in display:
             game_over = True
             score = calculate_score(correct_guesses, incorrect_guesses)
             print(f"WOW, you won the game! The word was: {chosen_word}")
@@ -172,7 +172,7 @@ def play_game():
     # Ask the player if they want to play again (moved out of the loop)
     print("Would you like to play again? (Y/N):")
     play_again_input = input().upper()
-    if play_again_input == 'Y':
+    if play_again_input == "Y":
         play_game()
 
 
@@ -213,16 +213,16 @@ def play_turn(chosen_word, lives, guessed_letters, display):
 
 
 def get_guessed_letter(guessed_letters):
-    '''
+    """
     Gets a letter guessed by the player and converts it to uppercase.
-    '''
+    """
     return input("Guess a letter: ").upper()
 
 
 def update_display(chosen_word, guessed_letter, display):
-    '''
+    """
     Updates the display based on the guessed letter in the chosen word.
-    '''
+    """
     letter_guessed = False
     for position in range(len(chosen_word)):
         letter = chosen_word[position]

@@ -44,7 +44,7 @@ The game continues until the guessing player successfully guesses the word or th
 
 ![Start of the game](assets/readme-assets/device_look.PNG)
 
-### A live demo to the website can be found [here](https://anjalee-kulasinghe.github.io/portfolio-project2-quiz-saga/)
+### A live demo to the website can be found [here](https://portfolio-project3-hangman-654eb8cab16a.herokuapp.com/)
 
 
 ## How to Play:
