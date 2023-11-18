@@ -1,10 +1,103 @@
+import gspread
+from google.oauth2.service_account import Credentials
 import random
 import hangman_stages
 
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
 
-# Define the scoring constants
+# Define the constant variables
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('score_board')
 CORRECT_GUESS_SCORE = 10
 INCORRECT_GUESS_PENALTY = 5
+
+
+def get_username(existing_username=None):
+    """
+    Get the username from the user.
+    If an existing username is provided,
+    return it without asking for a new one.
+    """
+    while True:
+        if existing_username:
+            print(f"Welcome back, {existing_username}!")
+            return existing_username
+
+        data_username = input('Please enter your username: \n')
+
+        # Check if the username already exists in the sheet
+        user_exists = any(
+            entry['username'] == data_username for entry in get_sheet_data()
+        )
+
+        if user_exists:
+            print(f"Welcome back, {data_username}!")
+            return data_username
+        else:
+            print(f"Welcome, {data_username}! Let's play HANGMAN\n")
+            return data_username
+
+
+def get_sheet_data():
+    """
+    Retrieve the data from the 'score_board' sheet.
+    Each entry in the data includes the username, score, and index.
+    """
+    try:
+        score_sheet = SHEET.get_worksheet(0)
+        records = score_sheet.get_all_records()
+        data = [
+            {
+                'username': entry['username'],
+                'score': entry['score'],
+                'index': i + 2
+            }
+            for i, entry in enumerate(records)
+        ]
+        return data
+    except Exception as e:
+        print(f"Error retrieving sheet data: {e}")
+        return []
+
+
+def update_scoreboard(username, score):
+    """
+    Update the 'score_board' sheet with the username and score.
+    If the username already exists, add the new score to the old score.
+    """
+    try:
+        score_sheet = SHEET.get_worksheet(0)
+        data = get_sheet_data()
+
+        # Check if the username already exists in the sheet
+        user_exists = any(entry['username'] == username for entry in data)
+
+        if user_exists:
+            # If the user exists, update the existing row with the new score
+            for entry in data:
+                if entry['username'] == username:
+                    entry['score'] += score
+                    score_sheet.update_cell(entry['index'], 2, entry['score'])
+                    print(f"Updated score for {username} to {entry['score']}")
+                    break
+        else:
+            # If the user doesn't exist, add a new row for the user
+            new_row = [username, score]
+            score_sheet.append_row(new_row)
+            print(f"Appended new row for {username} with score {score}")
+
+            # Update the local data with the new row
+            data = get_sheet_data()  # Refresh the local data
+
+        print("Score updated successfully!")
+    except Exception as e:
+        print(f"Error updating score: {e}")
 
 
 def choose_word():
@@ -79,6 +172,7 @@ def execute_hangman_game():
     '''
     # Whether the welcome message has been displayed
     welcome_displayed = False
+    existing_username = None  # Initialize existing_username
 
     # Main loop for the game
     while True:
@@ -89,7 +183,7 @@ def execute_hangman_game():
 
         # Ask the player if they want to start the game
         start_game = input(
-            "\nWould you like to start the game? (Y/N):"
+            "\nWould you like to start the game? (Y/N):\n"
         ).upper()
 
         # If the player chooses not to play, exit the game
@@ -107,12 +201,21 @@ def execute_hangman_game():
                 print("Goodbye!")
                 return
 
+            # Get the username
+            username = get_username(existing_username)
+
             # Play the game
-            play_game()
+            score = play_game(username)
+
+            # Update the scoreboard
+            update_scoreboard(username, score)
+
+            # Set existing_username for the next iteration
+            existing_username = username
 
             # Ask the player if they want to play again
             play_again_input = input(
-                "\nWould you like to play again? (Y/N):"
+                "\nWould you like to play again? (Y/N):\n"
             ).upper()
 
             # If the player doesn't want to play again, exit the current loop
@@ -126,7 +229,7 @@ def get_ready_status():
     Check if the player is ready to play the game
     """
     while True:
-        user_input = input("\nReady to play [Y/N]? ").upper()
+        user_input = input("\nReady to play [Y/N]? \n").upper()
         if user_input == "Y":
             return True
         elif user_input == "N":
@@ -135,7 +238,7 @@ def get_ready_status():
             print("Invalid entry. Please enter 'Y' or 'N'.")
 
 
-def play_game():
+def play_game(username):
     """
     Plays the Hangman game, allowing the player to guess words.
     This function includes displaying a welcome message,
@@ -165,6 +268,9 @@ def play_game():
             chosen_word, lives, guessed_letters, display
         )
 
+        # Calculate the score
+        score = calculate_score(correct_guesses, incorrect_guesses)
+
         # Update the counters based on the result of the turn
         if letter_guessed:
             correct_guesses += 1
@@ -182,6 +288,8 @@ def play_game():
         elif lives == 0:
             game_over = True
             print("\nSorry, you lost! The word was: " + chosen_word)
+
+    return score
 
 
 def play_turn(chosen_word, lives, guessed_letters, display):
@@ -226,7 +334,7 @@ def get_guessed_letter(guessed_letters):
     """
     Gets a letter guessed by the player and converts it to uppercase.
     """
-    return input("Guess a letter: ").upper()
+    return input("Guess a letter: \n").upper()
 
 
 def update_display(chosen_word, guessed_letter, display):

@@ -29,10 +29,12 @@ def get_username(existing_username=None):
             print(f"Welcome back, {existing_username}!")
             return existing_username
 
-        data_username = input('Please enter your username: ')
+        data_username = input('Please enter your username: \n')
 
         # Check if the username already exists in the sheet
-        user_exists = any(entry['username'] == data_username for entry in get_sheet_data())
+        user_exists = any(
+            entry['username'] == data_username for entry in get_sheet_data()
+        )
 
         if user_exists:
             print(f"Welcome back, {data_username}!")
@@ -40,6 +42,7 @@ def get_username(existing_username=None):
         else:
             print(f"Welcome, {data_username}! Let's play HANGMAN\n")
             return data_username
+
 
 def get_sheet_data():
     """
@@ -49,7 +52,14 @@ def get_sheet_data():
     try:
         score_sheet = SHEET.get_worksheet(0)
         records = score_sheet.get_all_records()
-        data = [{'username': entry['username'], 'score': entry['score'], 'index': i + 2} for i, entry in enumerate(records)]
+        data = [
+            {
+                'username': entry['username'],
+                'score': entry['score'],
+                'index': i + 2
+            }
+            for i, entry in enumerate(records)
+        ]
         return data
     except Exception as e:
         print(f"Error retrieving sheet data: {e}")
@@ -173,7 +183,7 @@ def execute_hangman_game():
 
         # Ask the player if they want to start the game
         start_game = input(
-            "\nWould you like to start the game? (Y/N):"
+            "\nWould you like to start the game? (Y/N):\n"
         ).upper()
 
         # If the player chooses not to play, exit the game
@@ -205,7 +215,7 @@ def execute_hangman_game():
 
             # Ask the player if they want to play again
             play_again_input = input(
-                "\nWould you like to play again? (Y/N):"
+                "\nWould you like to play again? (Y/N):\n"
             ).upper()
 
             # If the player doesn't want to play again, exit the current loop
@@ -219,7 +229,7 @@ def get_ready_status():
     Check if the player is ready to play the game
     """
     while True:
-        user_input = input("\nReady to play [Y/N]? ").upper()
+        user_input = input("\nReady to play [Y/N]? \n").upper()
         if user_input == "Y":
             return True
         elif user_input == "N":
@@ -281,6 +291,7 @@ def play_game(username):
 
     return score
 
+
 def play_turn(chosen_word, lives, guessed_letters, display):
     """
     Plays a single turn of the Hangman game.
@@ -323,7 +334,7 @@ def get_guessed_letter(guessed_letters):
     """
     Gets a letter guessed by the player and converts it to uppercase.
     """
-    return input("Guess a letter: ").upper()
+    return input("Guess a letter: \n").upper()
 
 
 def update_display(chosen_word, guessed_letter, display):
