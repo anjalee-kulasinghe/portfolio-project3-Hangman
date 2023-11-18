@@ -16,27 +16,26 @@ The game continues until the guessing player successfully guesses the word or th
 - [Demo](#demo)
   - [A live demo to the website can be found here](#a-live-demo-to-the-website-can-be-found-here)
 - [Planning Phase](#planning-phase)
-  - [User stories:](#user-stories)
-  - [Site Aims:](#site-aims)
-  - [How Will This Be Achieved:](#how-will-this-be-achieved)
-  - [Game Flow Chart:](#game-flow-chart)
+  - [User stories](#user-stories)
+  - [Site Aims](#site-aims)
+  - [How Will This Be Achieved](#how-will-this-be-achieved)
+  - [Game Flow Chart](#game-flow-chart)
 - [Features](#features)
-  - [Welcome Screen:](#welcome-screen)
-  - [Once Play Game is Started:](#once-play-game-is-started)
-  - [Error Handling:](#error-handling)
-  - [Future-Enhancements:](#future-enhancements)
-- [Data Model](#testing)
+  - [Welcome Screen](#welcome-screen)
+  - [Once Play Game is Started](#once-play-game-is-started)
+  - [Error Handling](#error-handling)
+  - [Future-Enhancements](#future-enhancements)
+- [Data Model](#data-model)
 - [Testing](#testing)
+  - [Solved Bugs](#solved-bugs)
+  - [Remaining Bugs](#remaining-bugs)
   - [Validator Testing](#validator-testing)
-  - [Bugs](#bugs)
 - [Libraries](#libraries)
   - [random:](#random)
-  - [tkinter:](#tkinter)
-  - [os:](#os)
 - [Deployment](#deployment)
+    - [Final Deployment to Heroku](#final-deployment-to-heroku)
 - [Credits](#credits)
   - [Content](#content)
-  - [Media](#media)
   - [Acknowledgements](#acknowledgements)
 
 ## Demo
@@ -46,7 +45,7 @@ The game continues until the guessing player successfully guesses the word or th
 ### A live demo to the website can be found [here](https://portfolio-project3-hangman-654eb8cab16a.herokuapp.com/)
 
 ## Planning Phase
-### User stories:
+### User stories
 - As a player, I want to start a new game so that I can begin guessing a new word.
 - As a player, I want to see the number of letters in the word represented by dashes so that I know how many letters I need to guess.
 - As a player, I want to be able to guess a letter and see if it is in the word, so that I can progress in solving the puzzle.
@@ -60,7 +59,7 @@ The game continues until the guessing player successfully guesses the word or th
 - As a player, I want the game to be visually appealing and user-friendly.
 - As a player, I want to play an enjoyable game of the classic hangman game by myself.
 
-### Site Aims:
+### Site Aims
 1. Entertainment:
   - Provide a fun and engaging experience for player who enjoy playing word games.
   - Offer a casual and entertaining way for the player to spend their leisure time.
@@ -72,7 +71,7 @@ The game continues until the guessing player successfully guesses the word or th
   - Offer a positive learning experience by providing feedback on correct and incorrect guesses.
   - Motivate players to improve their word-guessing skills over time.
 
-### How Will This Be Achieved:
+### How Will This Be Achieved
 1. Entertainment:
   - Diverse Word Database: Include a wide range of words from different categories to keep the game interesting.
   - Engaging User Interface: Design a simple interface to increase the overall gaming experience.
@@ -89,22 +88,23 @@ The game continues until the guessing player successfully guesses the word or th
 6. Accessibility:
   - User-Friendly Controls: Implement natural commands, to ensure the game is easily accessible for players of various ages and skill levels.
 
-### Game Flow Chart:
+### Game Flow Chart
 To understand the steps required in order to program the game, I created the below flowchart using lucid charts.
 ![flow_chart](assets/readme-assets/Flowchart.PNG)
 
 ## Features
-### Welcome Screen:
+### Welcome Screen
 From the welcome screen, the player will get the guidance 'How to Play the Game'.
 ![welcome](assets/readme-assets/welcome.PNG)
 
 Then the system will confirm whether the player wants to play the game and is ready to start.
 The player can exit the game by typing 'N'.
+
 ![welcome_exit](assets/readme-assets/welcome_exit.PNG)
 
 ![welcome_exit](assets/readme-assets/welcome_exit2.PNG)
 
-### Once Play Game is Started:
+### Once Play Game is Started
 * The player can see the dash lines for the secret word.
 ![strat_page](assets/readme-assets/start.PNG)
 
@@ -139,14 +139,14 @@ The player can exit the game by typing 'N'.
 * If the player wants, the player has a chance to exit the game.
 ![exit](assets/readme-assets/exit.PNG)
 
-### Error Handling:
+### Error Handling
 During the development process, error handling is done to make sure the player will have a smoother experience and to make the code more robust.
 When developing the code error handling is implemented using try-except blocks.
 * File Not Found:
   - If the 'words.txt' file is not found, the code prints an error message and exits the program.
 
 
-### Future-Enhancements:
+### Future-Enhancements
 Below are the things that would take my current MVP to the next level:
 1. Multiple Difficulty Levels:
     - Implement different difficulty levels with varying word complexities. Allow player to choose their preferred difficulty before starting the game.
@@ -170,7 +170,7 @@ Below are the things that would take my current MVP to the next level:
 ## Data Model
 This is a text-based Hangman game.
 
-### Overview of Functions:
+### Overview of Functions
 The breakdown of the data model is as follows:
 
 1. Word Selection:
@@ -204,49 +204,48 @@ The breakdown of the data model is as follows:
 11.	Game Start:
   - The game is started by calling the **execute_hangman_game** function at the end of the script.
 
-
-### Logic Flow:
+### Logic Flow
  The logic flow involves the continuous execution of the game, where user input is handled, and the game state is updated based on correct or incorrect guesses. The loop continues until the player decides to exit the game.
 
-## Testing Phase
+## Testing
 I have manually tested this project by doing the following:
 1. Tested in my local terminal and the Code Institute Heroku terminal.
 2. Give invalid inputs: to check whether it only considers alphabetic letters and not to lose a life when a number, a special character, or a space is given.
 3. PEP8: Passed the code through PEP8 linter and confirmed there are no problems.
 
 **Solved Bugs**
-  - Ready to play [Y/N]? when the player type 'N', Still start the game - to fix this, I add
+
+  - Ready to play [Y/N]? when the player type 'N', Still start the game - to fix this, I add
   `if start_game != 'Y':`
         `print("Goodbye!")`
         `return`
-  - Not to repeat the welcome message if the player decides to continue playing, I modify the `if play_again_input == 'Y':` by changing it as
+  - Not to repeat the welcome message if the player decides to continue playing, I modify the `if play_again_input == 'Y':` by changing it as
    `if play_again_input != 'Y':`
             `print("Goodbye!")`
             `return`
         `else:`
             `start_game = None`
-  - Not exit the game when the player selects 'N' - to fix this, use the `break` command.
-  - While running the program, I found that there is a syntax SyntaxWarning for hangman stages (**hangman_stages.py:1: SyntaxWarning: invalid escape sequence '\ '**). To make sure the backslashes won't be treated as escape characters, I used the **r** prefix.
-  - While running the program, I found that the Ascii hangman stages were appearing in the incorrect order. To fix it, I changed the Ascii figure order in the hangman_stages.py file.
-  - When using the validator, I found the issue **W291 trailing whitespace** in the welcome ascii art. To fix the issue, I have removed the trailing whitespace at the end.
-
+  - Not exit the game when the player selects 'N' - to fix this, use the `break` command.
+  - While running the program, I found that there is a syntax SyntaxWarning for hangman stages (**hangman_stages.py:1: SyntaxWarning: invalid escape sequence '\ '**). To make sure the backslashes won't be treated as escape characters, I used the **r** prefix.
+  - While running the program, I found that the Ascii hangman stages were appearing in the incorrect order. To fix it, I changed the Ascii figure order in the hangman_stages.py file.
+  - When using the validator, I found the issue **W291 trailing whitespace** in the welcome ascii art. To fix the issue, I have removed the trailing whitespace at the end.
 
 **Remaining Bugs**
-No bugs are remaining
+  - No bugs are remaining
 
 **Validator Testing**
-PEP8 - No errors were returned from https://pep8ci.herokuapp.com/
+  - PEP8 - No errors were returned from https://pep8ci.herokuapp.com/
 ![validator](assets/readme-assets/PEP8.PNG)
 
 ## Libraries
-### random:
+### random
 This library is used for generating random numbers. In the code, it is used to select a random index for choosing a word from the list.
 
 The Python file called **hangman_stages** is teated as a custom module that contains ASCII art representations of the hangman stages.
 
 ## Deployment
 
-### Final Deployment to Heroku:
+### Final Deployment to Heroku
 This project was deployed using Code Institue's mock terminal for Heroku.
 Steps of deployment:
   - Clone the repository.
