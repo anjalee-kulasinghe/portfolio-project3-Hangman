@@ -39,8 +39,7 @@ def print_welcome():
     """
     Welcome message and How to play.
     """
-    print(
-        r"""
+    print(r"""
 __        _______ _     ____ ___  __  __ _____ 
  \ \      / / ____| |   / ___/ _ \|  \/  | ____|
   \ \ /\ / /|  _| | |  | |  | | | | |\/| |  _|  
@@ -51,8 +50,7 @@ __        _______ _     ____ ___  __  __ _____
    | || | | | | |_| | / _ \ |  \| | |  _| |\/| | / _ \ |  \| |
    | || |_| | |  _  |/ ___ \| |\  | |_| | |  | |/ ___ \| |\  |
    |_| \___/  |_| |_/_/   \_\_| \_|\____|_|  |_/_/   \_\_| \_|
-"""
-    )
+""")
     print("How to play:")
     print("1. The secret word, underscore revels the number of letters.")
     print("2. Type a letter to guess the word.")
@@ -60,7 +58,7 @@ __        _______ _     ____ ___  __  __ _____
     print("4. Each wrong guess will add a part for the hangman.")
     print("5. Six incorrect guesses will end the game.")
     print("6. Try to guess the word and increase your score!")
-    print("7. Maximum score = 60. Each wrong guess -5 marks")
+    print("7. Maximum score = 50. Each wrong guess -5 marks")
     print("8. Enjoy the game!")
 
 
@@ -85,7 +83,7 @@ def execute_hangman_game():
             welcome_displayed = True
 
         # Ask the player if they want to start the game
-        print("Would you like to play the game? (Y/N):")
+        print("\nWould you like to play the game? (Y/N):")
         start_game = input().upper()
 
         # If the player chooses not to play, exit the game
@@ -103,7 +101,7 @@ def execute_hangman_game():
         play_game()
 
         # Ask the player if they want to play again
-        print("Would you like to play again? (Y/N):")
+        print("\nWould you like to play again? (Y/N):")
         play_again_input = input().upper()
 
         # If the player does not want to play again, exit the game

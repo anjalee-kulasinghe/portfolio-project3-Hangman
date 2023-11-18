@@ -51,7 +51,7 @@ The game continues until the guessing player successfully guesses the word or th
 - As a player, I want to see the number of letters in the word represented by dashes so that I know how many letters I need to guess.
 - As a player, I want to be able to guess a letter and see if it is in the word, so that I can progress in solving the puzzle.
 - As a player, I want a visual representation of the Hangman figure to track my progress and avoid making too many incorrect guesses.
-- As a player, I want to see the letters I have already guessed so that I don't lose a life.
+- As a player, I want to see the letters I have already guessed so that I will not repeat the same letter.
 - As a player, I want to be notified when I win the game by correctly guessing the word.
 - As a player, I want to be notified when I lose the game by making too many incorrect guesses.
 - As a player, I want a variety of words to guess to keep the game interesting and challenging.
@@ -128,7 +128,7 @@ The player can exit the game by typing 'N'.
 ![lost](assets/readme-assets/lost.PNG)
 
 * If the player guesses the word correctly, the player will win the game.
-![Win](assets/readme-assets/Win.PNG)
+![Win](assets/readme-assets/win.PNG)
 
 * If the player wins the game, a score will be added.
 ![score](assets/readme-assets/score.PNG)
@@ -140,28 +140,24 @@ The player can exit the game by typing 'N'.
 ![exit](assets/readme-assets/exit.PNG)
 
 ### Error Handling:
-During the development process, error handling is done to make sure the player will have a smoother user experience and to make the code more robust.
-1. File Not Found:
+During the development process, error handling is done to make sure the player will have a smoother experience and to make the code more robust.
+When developing the code error handling is implemented using try-except blocks. 
+* File Not Found:
   - If the 'words.txt' file is not found, the code prints an error message and exits the program.
-2. File Reading Error:
-  - If there is an error while reading the file, an exception is caught, and an error message is printed before exiting.
-3. Resource Loading Error:
-  - If there is an error while loading image resources (hangman images), an exception is caught, and an error message is printed before exiting.
-4. Tkinter Window Creation Error:
-  - If there is an error during the creation of the Tkinter window, an exception is caught, and an error message is printed before exiting.
+
 
 ### Future-Enhancements:
 Below are the things that would take my current MVP to the next level:
 1. Multiple Difficulty Levels:
-    - Implement different difficulty levels with varying word complexities. Allow users to choose their preferred difficulty before starting the game.
+    - Implement different difficulty levels with varying word complexities. Allow player to choose their preferred difficulty before starting the game.
 2. Word Categories:
-   - Introduce word categories or themes (e.g., animals, countries, sports) and allow users to select a category before playing.
+   - Introduce word categories or themes (e.g., animals, countries, sports) and allow player to select a category before playing.
 3. User Profiles:
-   - Implement user profiles to track individual scores and progress over time. Users can log in and see their game history.
+   - Implement user profiles to track individual scores and progress over time. Player can log in and see their game history.
 4. Hint System:
    - Add a hint system that provides players with a clue about the selected word. This can be optional and may cost the player in terms of points.
 5. Multiplayer Mode:
-   - Develop a multiplayer mode where users can play against each other. This could involve taking turns guessing words or competing in real-time.
+   - Develop a multiplayer mode where players can play against each other. This could involve taking turns guessing words or competing in real-time.
 6. Achievements and Badges:
    - Introduce achievements or badges for completing specific challenges, reaching high scores, or mastering certain categories.
 7. Sound Effects and Music:
@@ -199,34 +195,34 @@ The breakdown of the data model is as follows:
 8.	Game Logic:
   - The **play_game** function initializes the game, plays turns until the game is over, and asks if the player wants to play again.
   - The **play_turn** function handles a single turn, updating the display, guessed letters, and lives.
-  - The **get_guessed_letter** function triggers the user to input a letter for their guess.
+  - The **get_guessed_letter** function triggers the player to input a letter for their guess.
   - The **update_display** function updates the display based on the guessed letter.
 9.	Score Calculation:
-•	The calculate_score function calculates the player's score based on correct and incorrect guesses.
+  - The **calculate_score** function calculates the player's score based on correct and incorrect guesses.
 10.	Hangman Stages:
-•	The hangman_stages module seems to contain visual representations of the Hangman stages for incorrect guesses.
+  - The **hangman_stages** module contain visual representations of the Hangman stages for incorrect guesses.
 11.	Game Start:
-•	The game is started by calling the execute_hangman_game function at the end of the script.
-Overall, your code follows a modular structure and uses functions to encapsulate different aspects of the Hangman game. It provides a good separation of concerns and is readable.
-
+  - The game is started by calling the **execute_hangman_game** function at the end of the script.
 
 
 ### Logic Flow:
- The logic flow involves the continuous execution of the main loop, where the Tkinter window is created, user input is handled, and the game state is updated based on correct or incorrect guesses. The loop continues until the player decides to exit the game.
+ The logic flow involves the continuous execution of the game, where user input is handled, and the game state is updated based on correct or incorrect guesses. The loop continues until the player decides to exit the game.
 
 ## Testing Phase
+I have manually tested this project by doing the following:
+  - Tested in my local terminal and the Code Institute Heroku terminal.
+  - Give invalid inputs: to check whether it only considers alphabetic letters and not to lose a life when a number, a special character, or a space is given.
+  - PEP8: Passed the code through PEP8 linter and confirmed there are no problems.
+
 
 ## Libraries
 ### random:
 This library is used for generating random numbers. In the code, it is used to select a random index for choosing a word from the list.
 
-### tkinter:
-Tkinter is the standard GUI (Graphical User Interface) toolkit for Python. It is used to create the main game window, labels, buttons, and message boxes.
-
-### os:
-OS is used to handle file paths when loading image resources.
+The Python file called **hangman_stages** is teated as a custom module that contains ASCII art representations of the hangman stages.
 
 ## Deployment
+
 ### Playing on a Local machine:
 ### Final Deployment to Heroku:
 
